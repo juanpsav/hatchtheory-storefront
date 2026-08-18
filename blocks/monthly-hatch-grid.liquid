@@ -1,0 +1,168 @@
+{%- liquid
+  assign heading = block.settings.heading
+  assign show_summary = block.settings.show_summary
+  assign columns_mobile = block.settings.columns_mobile
+  assign columns_desktop = block.settings.columns_desktop
+  assign hatches = metaobjects.monthly_hatch.values | sort: 'month_number.value'
+-%}
+
+{%- style -%}
+  .ht-hatch-grid-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ block.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__heading {
+    margin: 0 0 1.5rem;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__list {
+    display: grid;
+    grid-template-columns: repeat({{ columns_mobile }}, 1fr);
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__card {
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    border-radius: {{ settings.card_corner_radius | default: 0 }}px;
+    padding: 1.25rem;
+    background: rgb(var(--color-background));
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__month {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    opacity: 0.6;
+    margin: 0 0 0.5rem;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__name {
+    font-weight: 600;
+    margin: 0 0 0.5rem;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__season {
+    display: inline-block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.125rem 0.5rem;
+    border-radius: 999px;
+    background: rgba(var(--color-foreground), 0.08);
+    margin-bottom: 0.75rem;
+  }
+
+  .ht-hatch-grid-{{ block.id }} .ht-hatch__summary {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.85;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ht-hatch-grid-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+    }
+    .ht-hatch-grid-{{ block.id }} .ht-hatch__list {
+      grid-template-columns: repeat({{ columns_desktop }}, 1fr);
+      gap: 1.25rem;
+    }
+  }
+{%- endstyle -%}
+
+<div class="ht-hatch-grid-{{ block.id }}" {{ block.shopify_attributes }}>
+  {%- if heading != blank -%}
+    <h2 class="ht-hatch__heading h1">{{ heading }}</h2>
+  {%- endif -%}
+
+  {%- if hatches.size > 0 -%}
+    <ul class="ht-hatch__list">
+      {%- for hatch in hatches -%}
+        <li class="ht-hatch__card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
+          <p class="ht-hatch__month">{{ hatch.month.value }}</p>
+          {%- if hatch.key_hatches.value != blank -%}
+            <p class="ht-hatch__name">{{ hatch.key_hatches.value | truncate: 60 }}</p>
+          {%- endif -%}
+          {%- if hatch.season.value != blank -%}
+            <span class="ht-hatch__season">{{ hatch.season.value }}</span>
+          {%- endif -%}
+          {%- if show_summary and hatch.summary.value != blank -%}
+            <p class="ht-hatch__summary">{{ hatch.summary.value }}</p>
+          {%- endif -%}
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- else -%}
+    <p>No monthly hatch entries published yet.</p>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Monthly hatch grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "The trout year, month by month"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_summary",
+      "label": "Show month summary",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "columns_mobile",
+      "label": "Columns on mobile",
+      "options": [
+        { "value": "1", "label": "1" },
+        { "value": "2", "label": "2" }
+      ],
+      "default": "1"
+    },
+    {
+      "type": "select",
+      "id": "columns_desktop",
+      "label": "Columns on desktop",
+      "options": [
+        { "value": "2", "label": "2" },
+        { "value": "3", "label": "3" },
+        { "value": "4", "label": "4" }
+      ],
+      "default": "3"
+    },
+    { "type": "header", "content": "Padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 32
+    }
+  ],
+  "presets": [
+    { "name": "Monthly hatch grid" }
+  ]
+}
+{% endschema %}

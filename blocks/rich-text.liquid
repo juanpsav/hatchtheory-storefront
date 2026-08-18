@@ -1,0 +1,92 @@
+{%- liquid
+  assign content = block.settings.content
+  assign max_width = block.settings.max_width
+-%}
+
+{%- style -%}
+  .ht-richtext-{{ block.id }} {
+    padding-top: {{ block.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ block.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    max-width: {{ max_width }}ch;
+  }
+
+  .ht-richtext-{{ block.id }}.ht-richtext--center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ht-richtext-{{ block.id }} p {
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+
+  .ht-richtext-{{ block.id }} h2,
+  .ht-richtext-{{ block.id }} h3 {
+    margin: 2rem 0 0.75rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .ht-richtext-{{ block.id }} {
+      padding-top: {{ block.settings.padding_top }}px;
+      padding-bottom: {{ block.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="ht-richtext-{{ block.id }} rte{% if block.settings.center %} ht-richtext--center{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" {{ block.shopify_attributes }}>
+  {{ content }}
+</div>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "settings": [
+    {
+      "type": "richtext",
+      "id": "content",
+      "label": "Body",
+      "default": "<p>Use this block for long-form copy. Field guide entries, brand explainers, anything where you want full editorial control.</p>"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width (characters)",
+      "min": 40,
+      "max": 90,
+      "step": 5,
+      "unit": "ch",
+      "default": 65
+    },
+    {
+      "type": "checkbox",
+      "id": "center",
+      "label": "Center the column",
+      "default": true
+    },
+    { "type": "header", "content": "Padding" },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 24
+    }
+  ],
+  "presets": [
+    { "name": "Rich text" }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,212 @@
+{%- style -%}
+  .field-guide-index {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .field-guide-index {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .field-guide-index__header {
+    max-width: 48rem;
+    margin: 0 auto 3.2rem;
+    text-align: center;
+  }
+
+  .field-guide-index__title {
+    font-size: 3.2rem;
+    line-height: 1.15;
+    margin: 0 0 1.2rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  @media screen and (min-width: 750px) {
+    .field-guide-index__title {
+      font-size: 3.8rem;
+    }
+  }
+
+  .field-guide-index__intro p {
+    font-size: 1.3rem;
+    line-height: 1.55;
+    opacity: 0.75;
+    margin: 0;
+  }
+
+  .field-guide-pillar {
+    margin-bottom: 3.2rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.12);
+    padding-top: 2rem;
+  }
+
+  .field-guide-pillar:last-child {
+    margin-bottom: 0;
+  }
+
+  .field-guide-pillar__label {
+    font-size: 0.95rem;
+    letter-spacing: 0.18rem;
+    text-transform: uppercase;
+    opacity: 0.55;
+    margin: 0 0 1.8rem;
+    font-weight: 500;
+  }
+
+  .field-guide-pillar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media screen and (min-width: 750px) {
+    .field-guide-pillar__list {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem 2.8rem;
+    }
+  }
+
+  .field-guide-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 0 0 1.4rem;
+    transition: opacity 0.2s ease;
+  }
+
+  .field-guide-card:hover {
+    opacity: 0.7;
+  }
+
+  .field-guide-card__title {
+    font-size: 1.55rem;
+    line-height: 1.3;
+    margin: 0 0 0.7rem;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+  }
+
+  .field-guide-card__dek {
+    font-size: 1.25rem;
+    line-height: 1.5;
+    margin: 0 0 1rem;
+    opacity: 0.78;
+  }
+
+  .field-guide-card__meta {
+    font-size: 0.9rem;
+    letter-spacing: 0.06rem;
+    opacity: 0.5;
+    text-transform: uppercase;
+  }
+{%- endstyle -%}
+
+<div class="page-width field-guide-index">
+  <header class="field-guide-index__header">
+    <h1 class="field-guide-index__title">{{ section.settings.title | default: 'Field Guide' | escape }}</h1>
+    {%- if section.settings.intro != blank -%}
+      <div class="field-guide-index__intro rte">
+        {{ section.settings.intro }}
+      </div>
+    {%- endif -%}
+  </header>
+
+  {%- liquid
+    assign all_entries = shop.metaobjects.field_guide_entry.values | sort: 'order'
+    assign pillar_order = section.settings.pillar_order | split: ','
+  -%}
+
+  {%- for pillar_name in pillar_order -%}
+    {%- assign pillar_clean = pillar_name | strip -%}
+    {%- assign pillar_entries = all_entries | where: 'pillar', pillar_clean -%}
+
+    {%- if pillar_entries.size > 0 -%}
+      <section class="field-guide-pillar">
+        <h2 class="field-guide-pillar__label">{{ pillar_clean }}</h2>
+        <ul class="field-guide-pillar__list">
+          {%- for entry in pillar_entries -%}
+            {%- assign target = entry.linked_page.value -%}
+            {%- if target != blank -%}
+              <li>
+                <a href="{{ target.url }}" class="field-guide-card">
+                  <h3 class="field-guide-card__title">{{ entry.title.value }}</h3>
+                  {%- if entry.dek.value != blank -%}
+                    <p class="field-guide-card__dek">{{ entry.dek.value }}</p>
+                  {%- endif -%}
+                  {%- if entry.reading_time.value != blank -%}
+                    <span class="field-guide-card__meta">{{ entry.reading_time.value }}</span>
+                  {%- endif -%}
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "Field Guide index",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Page title",
+      "default": "Field Guide"
+    },
+    {
+      "type": "richtext",
+      "id": "intro",
+      "label": "Intro text",
+      "default": "<p>Short pieces on how to fish smarter with less gear. Read straight through, or pull one up on the bank.</p>"
+    },
+    {
+      "type": "text",
+      "id": "pillar_order",
+      "label": "Pillar order (comma-separated)",
+      "info": "Comma-separated pillar names in the order they should appear. Must match metaobject pillar values exactly.",
+      "default": "less is more, what to cast, how to use the box"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 40
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "Field Guide index"
+    }
+  ]
+}
+{% endschema %}

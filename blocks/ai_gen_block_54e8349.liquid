@@ -1,0 +1,452 @@
+{% doc %}
+  @prompt
+    Create a Shopify Liquid section called "Hatch Calendar" and a page.hatch-calendar.json template that uses it.The section should:- Query all entries from the `monthly_hatch` metaobject, sorted by the `month_number` field (integer, 1-12)- Render each month as a card with the following fields:  - `month` (single_line_text_field) — card heading  - `season` (single_line_text_field) — displayed as a subtle label/badge below the month name  - `summary` (multi_line_text_field) — short paragraph  - `key_hatches` (multi_line_text_field) — displayed as a bulleted list  - `recommended_flies` (list.metaobject_reference) — display the referenced fly metaobject names/handles as tags or a small list  - `water_conditions` (multi_line_text_field) — collapsible or secondary block  - `angler_notes` (multi_line_text_field) — collapsible or secondary block  - `region_notes` (multi_line_text_field) — collapsible or secondary block- Cards should be laid out in a responsive grid (2 columns on desktop, 1 on mobile)- Style should be clean, outdoorsy, and premium — consistent with a fly fishing brand- The section should have a schema with a name of "Hatch Calendar" and presets so it can be added via the theme editorThe page.hatch-calendar.json template should:- Use a single-column layout- Include only this new hatch calendar section (no default rich text section)- Be assignable to the Hatch Calendar page
+{% enddoc %}
+
+{%- comment -%}
+  Hatch Calendar Section
+  Displays monthly hatch information from the monthly_hatch metaobject
+{%- endcomment -%}
+
+{%- liquid
+  assign monthly_hatches = shop.metaobjects.monthly_hatch.values | sort: 'month_number'
+-%}
+
+<div class="hatch-calendar color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width section-{{ section.id }}-padding">
+    
+    {%- if section.settings.heading != blank -%}
+      <div class="hatch-calendar__header center">
+        <h1 class="hatch-calendar__title inline-richtext {{ section.settings.heading_size }}">
+          {{ section.settings.heading }}
+        </h1>
+        {%- if section.settings.subheading != blank -%}
+          <div class="hatch-calendar__subheading rte">
+            {{ section.settings.subheading }}
+          </div>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+    {%- if monthly_hatches.size > 0 -%}
+      <div class="hatch-calendar__grid grid grid--1-col grid--2-col-tablet">
+        {%- for hatch in monthly_hatches -%}
+          <div class="hatch-calendar__card">
+            <div class="hatch-calendar__card-inner">
+              
+              {%- comment -%} Month and Season Header {%- endcomment -%}
+              <div class="hatch-calendar__card-header">
+                <h2 class="hatch-calendar__month h3">
+                  {{ hatch.month.value }}
+                </h2>
+                {%- if hatch.season.value != blank -%}
+                  <span class="hatch-calendar__season badge">
+                    {{ hatch.season.value }}
+                  </span>
+                {%- endif -%}
+              </div>
+
+              {%- comment -%} Summary {%- endcomment -%}
+              {%- if hatch.summary.value != blank -%}
+                <div class="hatch-calendar__summary">
+                  {{ hatch.summary.value | newline_to_br }}
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Key Hatches {%- endcomment -%}
+              {%- if hatch.key_hatches.value != blank -%}
+                <div class="hatch-calendar__section">
+                  <h3 class="hatch-calendar__section-title h5">Key Hatches</h3>
+                  <ul class="hatch-calendar__list">
+                    {%- assign hatches_array = hatch.key_hatches.value | split: '
+' -%}
+                    {%- for item in hatches_array -%}
+                      {%- assign trimmed_item = item | strip -%}
+                      {%- if trimmed_item != blank -%}
+                        <li>{{ trimmed_item }}</li>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </ul>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Recommended Flies {%- endcomment -%}
+              {%- if hatch.recommended_flies.value.size > 0 -%}
+                <div class="hatch-calendar__section">
+                  <h3 class="hatch-calendar__section-title h5">Recommended Flies</h3>
+                  <div class="hatch-calendar__flies">
+                    {%- for fly in hatch.recommended_flies.value -%}
+                      <span class="hatch-calendar__fly-tag">
+                        {{ fly.pattern.value }}
+                        {%- if fly.size.value != blank -%}
+                          <span class="hatch-calendar__fly-size">#{{ fly.size.value }}</span>
+                        {%- endif -%}
+                      </span>
+                    {%- endfor -%}
+                  </div>
+                </div>
+              {%- endif -%}
+
+              {%- comment -%} Collapsible Details {%- endcomment -%}
+              <div class="hatch-calendar__details">
+                
+                {%- if hatch.water_conditions.value != blank -%}
+                  <details class="hatch-calendar__detail-item">
+                    <summary class="hatch-calendar__detail-summary">
+                      <span>Water Conditions</span>
+                      <svg class="icon icon-caret" aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"/>
+                      </svg>
+                    </summary>
+                    <div class="hatch-calendar__detail-content">
+                      {{ hatch.water_conditions.value | newline_to_br }}
+                    </div>
+                  </details>
+                {%- endif -%}
+
+                {%- if hatch.angler_notes.value != blank -%}
+                  <details class="hatch-calendar__detail-item">
+                    <summary class="hatch-calendar__detail-summary">
+                      <span>Angler Notes</span>
+                      <svg class="icon icon-caret" aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"/>
+                      </svg>
+                    </summary>
+                    <div class="hatch-calendar__detail-content">
+                      {{ hatch.angler_notes.value | newline_to_br }}
+                    </div>
+                  </details>
+                {%- endif -%}
+
+                {%- if hatch.region_notes.value != blank -%}
+                  <details class="hatch-calendar__detail-item">
+                    <summary class="hatch-calendar__detail-summary">
+                      <span>Region Notes</span>
+                      <svg class="icon icon-caret" aria-hidden="true" focusable="false" viewBox="0 0 10 6">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M9.354.646a.5.5 0 00-.708 0L5 4.293 1.354.646a.5.5 0 00-.708.708l4 4a.5.5 0 00.708 0l4-4a.5.5 0 000-.708z" fill="currentColor"/>
+                      </svg>
+                    </summary>
+                    <div class="hatch-calendar__detail-content">
+                      {{ hatch.region_notes.value | newline_to_br }}
+                    </div>
+                  </details>
+                {%- endif -%}
+
+              </div>
+
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- else -%}
+      <div class="hatch-calendar__empty center">
+        <p>No hatch data available yet. Check back soon!</p>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  .hatch-calendar {
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+  }
+
+  .hatch-calendar__header {
+    margin-bottom: 4rem;
+  }
+
+  .hatch-calendar__title {
+    margin-bottom: 1rem;
+  }
+
+  .hatch-calendar__subheading {
+    font-size: 1.125rem;
+    opacity: 0.85;
+    max-width: 60rem;
+    margin: 0 auto;
+  }
+
+  .hatch-calendar__grid {
+    gap: 3rem 2rem;
+  }
+
+  .hatch-calendar__card {
+    height: 100%;
+  }
+
+  .hatch-calendar__card-inner {
+    background: rgb(var(--color-background));
+    border: 1px solid rgba(var(--color-foreground), 0.1);
+    padding: 2.5rem;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .hatch-calendar__card-inner:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .hatch-calendar__card-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .hatch-calendar__month {
+    margin: 0;
+    flex: 1;
+  }
+
+  .hatch-calendar__season {
+    background: rgba(var(--color-foreground), 0.08);
+    color: rgb(var(--color-foreground));
+    padding: 0.375rem 0.875rem;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .hatch-calendar__summary {
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.85);
+  }
+
+  .hatch-calendar__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .hatch-calendar__section-title {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .hatch-calendar__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .hatch-calendar__list li {
+    padding-left: 1.25rem;
+    position: relative;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  .hatch-calendar__list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: rgba(var(--color-foreground), 0.5);
+    font-weight: bold;
+  }
+
+  .hatch-calendar__flies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .hatch-calendar__fly-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    background: rgba(var(--color-foreground), 0.06);
+    border: 1px solid rgba(var(--color-foreground), 0.15);
+    padding: 0.5rem 0.875rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+
+  .hatch-calendar__fly-tag:hover {
+    background: rgba(var(--color-foreground), 0.1);
+    border-color: rgba(var(--color-foreground), 0.25);
+  }
+
+  .hatch-calendar__fly-size {
+    opacity: 0.7;
+    font-size: 0.8125rem;
+  }
+
+  .hatch-calendar__details {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .hatch-calendar__detail-item {
+    border-bottom: 1px solid rgba(var(--color-foreground), 0.08);
+  }
+
+  .hatch-calendar__detail-item:last-child {
+    border-bottom: none;
+  }
+
+  .hatch-calendar__detail-summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 0;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.9375rem;
+    user-select: none;
+    transition: color 0.2s ease;
+  }
+
+  .hatch-calendar__detail-summary:hover {
+    color: rgba(var(--color-foreground), 0.7);
+  }
+
+  .hatch-calendar__detail-summary .icon-caret {
+    width: 1rem;
+    height: 1rem;
+    transition: transform 0.2s ease;
+  }
+
+  .hatch-calendar__detail-item[open] .icon-caret {
+    transform: rotate(180deg);
+  }
+
+  .hatch-calendar__detail-content {
+    padding-bottom: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.85);
+  }
+
+  .hatch-calendar__empty {
+    padding: 4rem 2rem;
+    font-size: 1.125rem;
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  @media screen and (max-width: 749px) {
+    .hatch-calendar {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .hatch-calendar__header {
+      margin-bottom: 2.5rem;
+    }
+
+    .hatch-calendar__card-inner {
+      padding: 1.75rem;
+    }
+
+    .hatch-calendar__grid {
+      gap: 2rem 1rem;
+    }
+  }
+
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hatch Calendar",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "Hatch Calendar",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "<p>Your guide to seasonal hatches and fly patterns throughout the year</p>"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hatch Calendar"
+    }
+  ]
+}
+{% endschema %}

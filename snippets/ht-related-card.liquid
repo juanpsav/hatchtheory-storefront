@@ -1,0 +1,28 @@
+{%- comment -%}
+  Renders one related-content card.
+  Inputs:
+    entry - field_guide_entry metaobject
+{%- endcomment -%}
+<li class="ht-related__card">
+  {%- if entry.linked_page.value != blank -%}
+    <a href="{{ entry.linked_page.value.url }}">
+      {%- if entry.pillar.value != blank -%}
+        <p class="ht-related__pillar">{{ entry.pillar.value | replace: '_', ' ' }}</p>
+      {%- endif -%}
+      <p class="ht-related__title">{{ entry.title.value }}</p>
+      {%- if entry.dek.value != blank -%}
+        <p class="ht-related__dek">{{ entry.dek.value }}</p>
+      {%- endif -%}
+    </a>
+  {%- else -%}
+    <div class="ht-related__card-inner">
+      {%- if entry.pillar.value != blank -%}
+        <p class="ht-related__pillar">{{ entry.pillar.value | replace: '_', ' ' }}</p>
+      {%- endif -%}
+      <p class="ht-related__title">{{ entry.title.value }}</p>
+      {%- if entry.dek.value != blank -%}
+        <p class="ht-related__dek">{{ entry.dek.value }}</p>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+</li>

@@ -1,0 +1,611 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "rich-text": {
+      "type": "rich-text",
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "THE EVERYDAY TROUT",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading"
+      ],
+      "name": "Meet the Box - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-1",
+        "full_width": false,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 20
+      }
+    },
+    "featured-product": {
+      "type": "featured-product",
+      "blocks": {
+        "title": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2"
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "text_TdCmhM": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<strong>JUNE 2026 BETA PRODUCT LAUNCH - LIMITED STOCK</strong>",
+            "text_style": "subtitle"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "Your all-season, all-purpose fly box, curated for trout anywhere.",
+            "text_style": "subtitle"
+          }
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "title",
+        "price",
+        "text_TdCmhM",
+        "text",
+        "variant_picker",
+        "buy_buttons",
+        "share"
+      ],
+      "name": "Meet the Box -  Content",
+      "settings": {
+        "product": "the-everyday-trout",
+        "color_scheme": "scheme-1",
+        "secondary_background": false,
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": false,
+        "enable_video_looping": true,
+        "padding_top": 28,
+        "padding_bottom": 48
+      }
+    },
+    "rich_text_QdBgMR": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_KpPUQH": {
+          "type": "heading",
+          "name": "Why This Box Exists - Title",
+          "settings": {
+            "heading": "Why this box exists",
+            "heading_size": "h1"
+          }
+        },
+        "caption_pVXq3B": {
+          "type": "caption",
+          "settings": {
+            "caption": "You don't need a hundred flies. You just need the right ones.",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_EcyYmC": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A typical fly shop sells a hundred patterns. A typical trout day asks for three or four of them. The other 96 sit in a drawer.</p><p>We built this box around the trout you'll actually fish for. We stripped away the clutter to curate a specific selection of patterns that cover the absolute most of trout feeding behavior. No guesswork. No filler. Just the confidence that you have exactly what you need.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_KpPUQH",
+        "caption_pVXq3B",
+        "text_EcyYmC"
+      ],
+      "name": "Why This Box Exists - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-2",
+        "full_width": true,
+        "content_full_width": true,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "multicolumn_bjPPBE": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_ewzNxV": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ht-icon-seasons-v3.png",
+            "title": "Covers all seasons",
+            "text": "<p>Works across trout species, regions, and seasons.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_d9pBLJ": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ht-icon-beginner-card-b-v4.png",
+            "title": "Beginner-friendly",
+            "text": "<p>The perfect product for both beginners and  minimalist / practical anglers.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Ywr3tn": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ht-icon-gift-v3.png",
+            "title": "Gift-ready box",
+            "text": "<p>A no-brainer gift for birthdays, holidays, or first-timers. Simple language and trustable selection.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_K7Kji9": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/ht-icon-field-tested-v4.png",
+            "title": "Field-tested by real anglers",
+            "text": "<p>Hand-picked flies that have been tested all the way from Vermont to BC, lakes to creeks.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_ewzNxV",
+        "column_d9pBLJ",
+        "column_Ywr3tn",
+        "column_K7Kji9"
+      ],
+      "name": "Why This Box Exists - Content",
+      "settings": {
+        "title": "",
+        "heading_size": "h1",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "button_link": "",
+        "columns_desktop": 4,
+        "column_alignment": "left",
+        "center_images": true,
+        "ht_style": "default",
+        "background_style": "primary",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "mobile_compact": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_PiJahn": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_kc6yV8": {
+          "type": "heading",
+          "settings": {
+            "heading": "Knowing what to tie on",
+            "heading_size": "h1"
+          }
+        },
+        "caption_Fxr8Bq": {
+          "type": "caption",
+          "disabled": true,
+          "settings": {
+            "caption": "Know when to use every fly",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_DUrkAh": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>The hardest part of fly fishing isn't casting; it's knowing what to tie on.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_kc6yV8",
+        "caption_Fxr8Bq",
+        "text_DUrkAh"
+      ],
+      "name": "Fish Smarter, Not Harder - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 28
+      }
+    },
+    "image_with_text_xHGEKA": {
+      "type": "image-with-text",
+      "blocks": {
+        "heading_cGGWc9": {
+          "type": "heading",
+          "settings": {
+            "heading": "The hardest part of fly fishing isn't casting; it's knowing what to tie on.",
+            "heading_size": "h2"
+          }
+        },
+        "text_dbQr9A": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Every box ships with a waterproof field card that walks you through the decision in two minutes: what to look for at the water, which fly to tie on, and how to use it. The full field guide on the site goes deeper.</p><ul><li><strong>Match the Hatch:</strong> Identify if trout are feeding on nymphs, streamers, or dry flies.</li><li><strong>Fly Presentation:</strong> Techniques for fishing different fly types in varying water conditions.</li><li><strong>Seasonal Timing:</strong> Know what works from spring runoff to low-water autumn.</li></ul>",
+            "text_style": "body"
+          }
+        },
+        "button_exxhgx": {
+          "type": "button",
+          "settings": {
+            "button_label": "Open the field guide",
+            "button_link": "shopify://pages/field-guide",
+            "button_style_secondary": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_cGGWc9",
+        "text_dbQr9A",
+        "button_exxhgx"
+      ],
+      "name": "Fish Smarter, Not Harder - Content",
+      "settings": {
+        "image": "shopify://shop_images/A55B20C4-FCCA-4517-BF4C-6249281CFCA7.jpg",
+        "height": "adapt",
+        "desktop_image_width": "medium",
+        "layout": "image_first",
+        "image_behavior": "none",
+        "content_flush": true,
+        "content_layout": "no-overlap",
+        "desktop_content_position": "middle",
+        "desktop_content_alignment": "left",
+        "mobile_content_alignment": "left",
+        "section_color_scheme": "",
+        "color_scheme": "scheme-1",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "rich_text_Vqk7V4": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_tAgDpE": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Everyday Trout flies index",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_tAgDpE"
+      ],
+      "name": "Patterns",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 0
+      }
+    },
+    "custom_liquid_AEjBkn": {
+      "type": "custom-liquid",
+      "name": "Patterns - custom Liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  .hatch-table-container {\n    background-color: #1E2E27; /* Deep Pine Green */\n    color: #ECF3EF; /* Soft Sage */\n    padding: 40px 20px;\n    font-family: 'Platypi', serif; /* Uses your theme font if loaded, else serif */\n    max-width: 1200px;\n    margin: 0 auto;\n  }\n  .hatch-grid {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 40px;\n  }\n  @media (min-width: 768px) {\n    .hatch-grid {\n      grid-template-columns: 1fr 1fr 1fr;\n      gap: 20px;\n    }\n  }\n  .hatch-column {\n    border-top: 1px solid #4A5D54; /* Subtle divider */\n    padding-top: 20px;\n  }\n  .hatch-header {\n    font-size: 1.2rem;\n    font-weight: 600;\n    margin-bottom: 25px;\n    text-transform: uppercase;\n    letter-spacing: 0.05em;\n    color: rgba(236, 243, 239, 0.65);\n  }\n  .fly-item {\n    margin-bottom: 30px;\n  }\n  .fly-name {\n    font-family: 'Platypi', serif;\n    font-size: 1.1rem;\n    font-weight: 500;\n    margin-bottom: 4px;\n    color: #FFFFFF;\n  }\n  .fly-details {\n    font-family: sans-serif;\n    font-size: 0.9rem;\n    opacity: 0.6;\n    margin-bottom: 8px;\n    font-style: italic;\n  }\n  .fly-desc {\n    font-family: sans-serif;\n    font-size: 0.95rem;\n    line-height: 1.5;\n    opacity: 0.6;\n  }\n\n  .fly-item {\n    display: grid;\n    grid-template-columns: 48px 1fr;\n    column-gap: 16px;\n  }\n  .fly-icon {\n    grid-column: 1;\n    grid-row: 1 / span 3;\n  }\n  .fly-icon img {\n    width: 100%;\n    height: auto;\n    display: block;\n    opacity: 0.95;\n  }\n  .fly-icon--wildcard {\n    font-family: 'Platypi', serif;\n    font-size: 1.7rem;\n    color: #ECF3EF;\n    opacity: 0.85;\n    line-height: 1.2;\n    text-align: center;\n  }\n  .fly-name, .fly-details, .fly-desc {\n    grid-column: 2;\n  }\n</style>\n\n<div class=\"hatch-table-container\">\n  <div class=\"hatch-grid\">\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Surface (Dries)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'parachute-adams-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Parachute Adams (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">The universal mayfly when fish are feeding on the surface.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'elk-hair-caddis-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Elk Hair Caddis (x5)</div>\n        <div class=\"fly-details\">Sizes 12</div>\n        <div class=\"fly-desc\">Floats high and stays visible. Great for rough waters.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Sub-Surface (Nymphs)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-pheasant-tail-nymph-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Pheasant Tail (x5)</div>\n        <div class=\"fly-details\">Sizes 16</div>\n        <div class=\"fly-desc\">The \"every-bug.\" Imitates almost any swimming nymph in the water column.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-hares-ear-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Hare’s Ear (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">Buggy, messy profile suggesting many insects.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Streamers & Utility</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'woolly-bugger-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Woolly Bugger (x3)</div>\n        <div class=\"fly-details\">Size 8 (Olive)</div>\n        <div class=\"fly-desc\">For searching deep pools. Looks like a leech, minnow, or crayfish.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon fly-icon--wildcard\">?</div>\n        <div class=\"fly-name\">WILDCARD FLIES (x3)</div>\n        <div class=\"fly-details\">Varied sizes</div>\n        <div class=\"fly-desc\">The fun but useful complements to your fly box. Varied additional flies with their description and instructions.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_9fLxEn": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_LLjUGT": {
+          "type": "heading",
+          "settings": {
+            "heading": "We’re Fly Fishers Too",
+            "heading_size": "h1"
+          }
+        },
+        "caption_Knyxk9": {
+          "type": "caption",
+          "settings": {
+            "caption": "Tested on trout, not just ideas",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_BFhkMU": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Hatch Theory is built by anglers who live and fish across North America.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_LLjUGT",
+        "caption_Knyxk9",
+        "text_BFhkMU"
+      ],
+      "disabled": true,
+      "name": "Why Trust Us - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_Kziimz": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_Q3JBPV": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Customer Testimonial....",
+            "heading_size": "h2"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Q3JBPV"
+      ],
+      "disabled": true,
+      "name": "Why Trust Us - Content",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_Rh4WHi": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_8tAH6R": {
+          "type": "heading",
+          "settings": {
+            "heading": "Not just another fly kit",
+            "heading_size": "h1"
+          }
+        },
+        "caption_ECFcQx": {
+          "type": "caption",
+          "settings": {
+            "caption": "Most fly boxes overwhelm. Ours teaches.",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_iWn7Fi": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We believe fly fishing should feel approachable, not intimidating. This box is your confident start.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_8tAH6R",
+        "caption_ECFcQx",
+        "text_iWn7Fi"
+      ],
+      "name": "Why you vs competitors - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 28
+      }
+    },
+    "1758144760bb8dd7c4": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_df59715_zeTiGh": {
+          "type": "ai_gen_block_df59715",
+          "settings": {
+            "padding_top": 36,
+            "padding_bottom": 36,
+            "table_title": "",
+            "feature_column_header": "Features",
+            "column_1_header": "Hatch Theory",
+            "column_2_header": "Big Box store flies",
+            "column_3_header": "",
+            "column_4_header": "",
+            "feature_1_name": "Fly selection curated?",
+            "feature_1_col1": "checkmark",
+            "feature_1_col2": "x_mark",
+            "feature_1_col3": "checkmark",
+            "feature_1_col4": "checkmark",
+            "feature_2_name": "Instructional card?",
+            "feature_2_col1": "checkmark",
+            "feature_2_col2": "x_mark",
+            "feature_2_col3": "unlimited",
+            "feature_2_col4": "unlimited",
+            "feature_3_name": "Gift-ready box?",
+            "feature_3_col1": "checkmark",
+            "feature_3_col2": "x_mark",
+            "feature_3_col3": "unlimited",
+            "feature_3_col4": "unlimited",
+            "feature_4_name": "North American tested?",
+            "feature_4_col1": "checkmark",
+            "feature_4_col2": "x_mark",
+            "feature_4_col3": "checkmark",
+            "feature_4_col4": "checkmark",
+            "feature_5_name": "",
+            "feature_5_col1": "x_mark",
+            "feature_5_col2": "checkmark",
+            "feature_5_col3": "checkmark",
+            "feature_5_col4": "checkmark",
+            "feature_6_name": "",
+            "feature_6_col1": "x_mark",
+            "feature_6_col2": "checkmark",
+            "feature_6_col3": "checkmark",
+            "feature_6_col4": "checkmark",
+            "feature_7_name": "",
+            "feature_7_col1": "x_mark",
+            "feature_7_col2": "checkmark",
+            "feature_7_col3": "checkmark",
+            "feature_7_col4": "checkmark",
+            "feature_8_name": "",
+            "feature_8_col1": "x_mark",
+            "feature_8_col2": "checkmark",
+            "feature_8_col3": "checkmark",
+            "feature_8_col4": "checkmark",
+            "feature_9_name": "",
+            "feature_9_col1": "x_mark",
+            "feature_9_col2": "checkmark",
+            "feature_9_col3": "checkmark",
+            "feature_9_col4": "checkmark",
+            "feature_10_name": "",
+            "feature_10_col1": "x_mark",
+            "feature_10_col2": "checkmark",
+            "feature_10_col3": "checkmark",
+            "feature_10_col4": "checkmark",
+            "color_scheme": "scheme-1",
+            "background_color": "#ffffff",
+            "header_background_color": "#1e2e27",
+            "header_text_color": "#ffffff",
+            "alternate_row_color": "#f8f8f8",
+            "border_color": "#e0e0e0",
+            "checkmark_color": "#008060",
+            "x_mark_color": "#d82c0d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_df59715_zeTiGh"
+      ],
+      "name": "Why you vs Competitors - Content",
+      "settings": {}
+    },
+    "rich_text_ABwGze": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_7XyGnk": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ready to Fish?",
+            "heading_size": "h1"
+          }
+        },
+        "text_Re4PQB": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Free shipping across Canada</p>"
+          }
+        },
+        "button_dtVQ7N": {
+          "type": "button",
+          "settings": {
+            "button_label": "Order Your Box Today",
+            "button_link": "shopify://products/the-everyday-trout",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_7XyGnk",
+        "text_Re4PQB",
+        "button_dtVQ7N"
+      ],
+      "name": "How Do I Get It Now - Content",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    }
+  },
+  "order": [
+    "rich-text",
+    "featured-product",
+    "rich_text_QdBgMR",
+    "multicolumn_bjPPBE",
+    "rich_text_PiJahn",
+    "image_with_text_xHGEKA",
+    "rich_text_Vqk7V4",
+    "custom_liquid_AEjBkn",
+    "rich_text_9fLxEn",
+    "rich_text_Kziimz",
+    "rich_text_Rh4WHi",
+    "1758144760bb8dd7c4",
+    "rich_text_ABwGze"
+  ]
+}

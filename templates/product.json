@@ -1,0 +1,425 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "text": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "{{ product.vendor }}",
+            "text_style": "body"
+          }
+        },
+        "title": {
+          "type": "title",
+          "settings": {}
+        },
+        "judge_me_reviews_preview_badge_WAYW8Y": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {}
+        },
+        "loox_reviews_loox_rating_8wTTBa": {
+          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
+          "disabled": true,
+          "settings": {
+            "contentSize": 16,
+            "pattern": "",
+            "hideText": false,
+            "alignment": "",
+            "layout": "",
+            "textColor": "#1e2e27",
+            "starColor": "",
+            "showAllReviews": false,
+            "looxOpenFloatingWidget": false,
+            "emptyRatingWidget": false
+          }
+        },
+        "price": {
+          "type": "price",
+          "settings": {}
+        },
+        "rating": {
+          "type": "rating",
+          "settings": {}
+        },
+        "description": {
+          "type": "description",
+          "settings": {}
+        },
+        "variant_picker": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "buy_buttons": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text",
+        "title",
+        "judge_me_reviews_preview_badge_WAYW8Y",
+        "loox_reviews_loox_rating_8wTTBa",
+        "price",
+        "rating",
+        "description",
+        "variant_picker",
+        "quantity_selector",
+        "buy_buttons",
+        "share"
+      ],
+      "custom_css": [
+        "/* Product description text size */.product__description {font-size: 1.5rem; /* ~14px, down from typical 16px */ line-height: 1.5;}"
+      ],
+      "settings": {
+        "enable_sticky_info": true,
+        "color_scheme": "scheme-1",
+        "media_size": "medium",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "gallery_layout": "thumbnail",
+        "mobile_thumbnails": "hide",
+        "media_position": "left",
+        "image_zoom": "lightbox",
+        "hide_variants": true,
+        "enable_video_looping": false,
+        "padding_top": 52,
+        "padding_bottom": 24
+      }
+    },
+    "rich_text_KTAwBD": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_aUGeBf": {
+          "type": "heading",
+          "name": "Why This Box Exists - Title",
+          "settings": {
+            "heading": "Why this box exists",
+            "heading_size": "h1"
+          }
+        },
+        "caption_AWMR7R": {
+          "type": "caption",
+          "settings": {
+            "caption": "You don't need a hundred flies. You just need the right ones.",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_cEimng": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A typical fly shop sells a hundred patterns. A typical trout day asks for three or four of them. The other 96 sit in a drawer.</p><p>We built this box around the trout you'll actually fish for. We stripped away the clutter to curate a specific selection of patterns that cover the absolute most of trout feeding behavior. No guesswork. No filler. Just the confidence that you have exactly what you need.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_aUGeBf",
+        "caption_AWMR7R",
+        "text_cEimng"
+      ],
+      "name": "Why This Box Exists - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "left",
+        "color_scheme": "scheme-1",
+        "full_width": true,
+        "content_full_width": true,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "rich_text_LKRdVc": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_wJfJJN": {
+          "type": "heading",
+          "settings": {
+            "heading": "The Everyday Trout flies index",
+            "heading_size": "h1"
+          }
+        }
+      },
+      "block_order": [
+        "heading_wJfJJN"
+      ],
+      "name": "Patterns - title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 28,
+        "padding_bottom": 12
+      }
+    },
+    "custom_liquid_qRn6gx": {
+      "type": "custom-liquid",
+      "name": "Patterns - Custom Liquid",
+      "settings": {
+        "custom_liquid": "<style>\n  .hatch-table-container {\n    background-color: #1E2E27; /* Deep Pine Green */\n    color: #ECF3EF; /* Soft Sage */\n    padding: 40px 20px;\n    font-family: 'Platypi', serif; /* Uses your theme font if loaded, else serif */\n    max-width: 1200px;\n    margin: 0 auto;\n  }\n  .hatch-grid {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 40px;\n  }\n  @media (min-width: 768px) {\n    .hatch-grid {\n      grid-template-columns: 1fr 1fr 1fr;\n      gap: 20px;\n    }\n  }\n  .hatch-column {\n    border-top: 1px solid #4A5D54; /* Subtle divider */\n    padding-top: 20px;\n  }\n  .hatch-header {\n    font-size: 1.2rem;\n    font-weight: 600;\n    margin-bottom: 25px;\n    text-transform: uppercase;\n    letter-spacing: 0.05em;\n    color: rgba(236, 243, 239, 0.65);\n  }\n  .fly-item {\n    margin-bottom: 30px;\n  }\n  .fly-name {\n    font-family: 'Platypi', serif;\n    font-size: 1.1rem;\n    font-weight: 500;\n    margin-bottom: 4px;\n    color: #FFFFFF;\n  }\n  .fly-details {\n    font-family: sans-serif;\n    font-size: 0.9rem;\n    opacity: 0.6;\n    margin-bottom: 8px;\n    font-style: italic;\n  }\n  .fly-desc {\n    font-family: sans-serif;\n    font-size: 0.95rem;\n    line-height: 1.5;\n    opacity: 0.6;\n  }\n\n  .fly-item {\n    display: grid;\n    grid-template-columns: 48px 1fr;\n    column-gap: 16px;\n  }\n  .fly-icon {\n    grid-column: 1;\n    grid-row: 1 / span 3;\n  }\n  .fly-icon img {\n    width: 100%;\n    height: auto;\n    display: block;\n    opacity: 0.95;\n  }\n  .fly-icon--wildcard {\n    font-family: 'Platypi', serif;\n    font-size: 1.7rem;\n    color: #ECF3EF;\n    opacity: 0.85;\n    line-height: 1.2;\n    text-align: center;\n  }\n  .fly-name, .fly-details, .fly-desc {\n    grid-column: 2;\n  }\n</style>\n\n<div class=\"hatch-table-container\">\n  <div class=\"hatch-grid\">\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Surface (Dries)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'parachute-adams-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Parachute Adams (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">The universal mayfly when fish are feeding on the surface.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'elk-hair-caddis-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Elk Hair Caddis (x5)</div>\n        <div class=\"fly-details\">Sizes 12</div>\n        <div class=\"fly-desc\">Floats high and stays visible. Great for rough water.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Sub-Surface (Nymphs)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-pheasant-tail-nymph-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Pheasant Tail (x5)</div>\n        <div class=\"fly-details\">Sizes 16</div>\n        <div class=\"fly-desc\">The \"every-bug.\" Imitates almost any swimming nymph in the water column.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-hares-ear-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Hare’s Ear (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">Buggy, messy profile suggesting many insects.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Streamers & Utility</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'woolly-bugger-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Woolly Bugger (x3)</div>\n        <div class=\"fly-details\">Size 8 (Olive)</div>\n        <div class=\"fly-desc\">For searching deep pools. Looks like a leech, minnow, or crayfish.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon fly-icon--wildcard\">?</div>\n        <div class=\"fly-name\">WILDCARD FLIES (x3)</div>\n        <div class=\"fly-details\">Varied sizes</div>\n        <div class=\"fly-desc\">The fun but useful complements to your fly box. Varied additional flies with their description and instructions.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+        "color_scheme": "scheme-3",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "rich_text_aptbN4": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_nUwxhr": {
+          "type": "heading",
+          "settings": {
+            "heading": "Not just another fly kit",
+            "heading_size": "h1"
+          }
+        },
+        "caption_6eNLaT": {
+          "type": "caption",
+          "disabled": true,
+          "settings": {
+            "caption": "Most fly boxes overwhelm. This one teaches.",
+            "text_style": "caption-with-letter-spacing",
+            "text_size": "medium"
+          }
+        },
+        "text_ijP6ii": {
+          "type": "text",
+          "settings": {
+            "text": "<p>We believe fly fishing should feel approachable, not intimidating. This box is your confident start.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "heading_nUwxhr",
+        "caption_6eNLaT",
+        "text_ijP6ii"
+      ],
+      "name": "Why you vs competitors - Title",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": false,
+        "padding_top": 40,
+        "padding_bottom": 28
+      }
+    },
+    "blocks_w7VAqJ": {
+      "type": "_blocks",
+      "blocks": {
+        "ai_gen_block_df59715_4AztBj": {
+          "type": "ai_gen_block_df59715",
+          "settings": {
+            "padding_top": 16,
+            "padding_bottom": 36,
+            "table_title": "",
+            "feature_column_header": "Features",
+            "column_1_header": "Hatch Theory",
+            "column_2_header": "Big Box store flies",
+            "column_3_header": "",
+            "column_4_header": "",
+            "feature_1_name": "Fly selection curated?",
+            "feature_1_col1": "checkmark",
+            "feature_1_col2": "x_mark",
+            "feature_1_col3": "checkmark",
+            "feature_1_col4": "checkmark",
+            "feature_2_name": "Instructional card?",
+            "feature_2_col1": "checkmark",
+            "feature_2_col2": "x_mark",
+            "feature_2_col3": "unlimited",
+            "feature_2_col4": "unlimited",
+            "feature_3_name": "Gift-ready box?",
+            "feature_3_col1": "checkmark",
+            "feature_3_col2": "x_mark",
+            "feature_3_col3": "unlimited",
+            "feature_3_col4": "unlimited",
+            "feature_4_name": "North American tested?",
+            "feature_4_col1": "checkmark",
+            "feature_4_col2": "x_mark",
+            "feature_4_col3": "checkmark",
+            "feature_4_col4": "checkmark",
+            "feature_5_name": "",
+            "feature_5_col1": "x_mark",
+            "feature_5_col2": "checkmark",
+            "feature_5_col3": "checkmark",
+            "feature_5_col4": "checkmark",
+            "feature_6_name": "",
+            "feature_6_col1": "x_mark",
+            "feature_6_col2": "checkmark",
+            "feature_6_col3": "checkmark",
+            "feature_6_col4": "checkmark",
+            "feature_7_name": "",
+            "feature_7_col1": "x_mark",
+            "feature_7_col2": "checkmark",
+            "feature_7_col3": "checkmark",
+            "feature_7_col4": "checkmark",
+            "feature_8_name": "",
+            "feature_8_col1": "x_mark",
+            "feature_8_col2": "checkmark",
+            "feature_8_col3": "checkmark",
+            "feature_8_col4": "checkmark",
+            "feature_9_name": "",
+            "feature_9_col1": "x_mark",
+            "feature_9_col2": "checkmark",
+            "feature_9_col3": "checkmark",
+            "feature_9_col4": "checkmark",
+            "feature_10_name": "",
+            "feature_10_col1": "x_mark",
+            "feature_10_col2": "checkmark",
+            "feature_10_col3": "checkmark",
+            "feature_10_col4": "checkmark",
+            "color_scheme": "scheme-1",
+            "background_color": "#ffffff",
+            "header_background_color": "#1e2e27",
+            "header_text_color": "#ffffff",
+            "alternate_row_color": "#f8f8f8",
+            "border_color": "#e0e0e0",
+            "checkmark_color": "#008060",
+            "x_mark_color": "#d82c0d"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "ai_gen_block_df59715_4AztBj"
+      ],
+      "name": "Comparison table",
+      "settings": {}
+    },
+    "related-products": {
+      "type": "related-products",
+      "disabled": true,
+      "settings": {
+        "heading": "You may also like",
+        "heading_size": "h2",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "columns_mobile": "2",
+        "color_scheme": "scheme-1",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "padding_top": 36,
+        "padding_bottom": 28
+      }
+    },
+    "rich_text_imnaVm": {
+      "type": "rich-text",
+      "blocks": {
+        "heading_qfndkL": {
+          "type": "heading",
+          "settings": {
+            "heading": "Ready to Fish?",
+            "heading_size": "h1"
+          }
+        },
+        "text_A9eaTf": {
+          "type": "text",
+          "settings": {
+            "text": "<p>Free shipping across North America</p>"
+          }
+        },
+        "button_bFgdjY": {
+          "type": "button",
+          "settings": {
+            "button_label": "Order Your Box Today",
+            "button_link": "shopify://products/the-everyday-trout",
+            "button_style_secondary": false,
+            "button_label_2": "",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "heading_qfndkL",
+        "text_A9eaTf",
+        "button_bFgdjY"
+      ],
+      "name": "How Do I Get It Now - Content",
+      "settings": {
+        "desktop_content_position": "center",
+        "content_alignment": "center",
+        "color_scheme": "scheme-3",
+        "full_width": true,
+        "content_full_width": false,
+        "cta_banner": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
+    "1783351673013529ea": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_yjHiAk": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_yjHiAk"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
+    "178542571500889150": {
+      "type": "apps",
+      "settings": {
+        "include_margins": true
+      }
+    }
+  },
+  "order": [
+    "main",
+    "rich_text_KTAwBD",
+    "rich_text_LKRdVc",
+    "custom_liquid_qRn6gx",
+    "rich_text_aptbN4",
+    "blocks_w7VAqJ",
+    "related-products",
+    "rich_text_imnaVm",
+    "1783351673013529ea",
+    "178542571500889150"
+  ]
+}

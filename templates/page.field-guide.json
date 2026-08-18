@@ -1,0 +1,25 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "field_guide_index": {
+      "type": "field-guide-index",
+      "settings": {
+        "intro": "<p>Short pieces on how to fish smarter with less gear. Read straight through, or pull one up on the bank.</p>",
+        "pillar_order": "less is more, what to cast, how to use the box",
+        "padding_top": 40,
+        "padding_bottom": 80
+      }
+    }
+  },
+  "order": [
+    "field_guide_index"
+  ]
+}
