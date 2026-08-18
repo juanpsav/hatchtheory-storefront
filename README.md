@@ -1,3 +1,3 @@
-# Hatch Theory Storefront Theme
+# Hatch Theory
 
-This is the storefront code for [hatchtheory.co](https://hatchtheory.co).
+Storefront code for [hatchtheory.co](https://hatchtheory.co).
