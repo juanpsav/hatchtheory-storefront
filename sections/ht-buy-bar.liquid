@@ -1,0 +1,39 @@
+{% comment %}
+  Sticky buy bar (Hatch Theory, 2026-10-27). Appears once the page's main buy buttons scroll out of view.
+  Uses the theme's product form, so Add to cart opens the cart drawer like every other form.
+{% endcomment %}
+{%- liquid
+  assign bar_product = section.settings.product
+  if bar_product == blank
+    assign bar_product = product
+  endif
+-%}
+{%- if bar_product != blank and bar_product.available -%}
+  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'ht-buy-bar.js' | asset_url }}" defer="defer"></script>
+  <ht-buy-bar class="ht-buybar color-{{ section.settings.color_scheme }}" aria-hidden="true">
+    <a class="ht-buybar__link" href="{{ bar_product.url }}">
+      {%- if bar_product.featured_image -%}
+        {{ bar_product.featured_image | image_url: width: 120 | image_tag: class: 'ht-buybar__img', loading: 'lazy', widths: '60, 120', sizes: '44px', alt: '' }}
+      {%- endif -%}
+      <span>
+        <span class="ht-buybar__title">{{ bar_product.title | escape }}</span>
+        <span class="ht-buybar__price">{{ bar_product.price | money_with_currency }}</span>
+      </span>
+    </a>
+    {%- assign bar_form_id = 'product-form-' | append: section.id -%}
+    {% render 'buy-buttons', block: section, product: bar_product, product_form_id: bar_form_id, section_id: section.id %}
+  </ht-buy-bar>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky buy bar",
+  "class": "ht-buybar-section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "info": "Leave empty on product pages to use the page's product." },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" }
+  ],
+  "presets": [{ "name": "Sticky buy bar" }]
+}
+{% endschema %}

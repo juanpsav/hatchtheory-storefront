@@ -33,7 +33,8 @@
         "cta_banner": false,
         "padding_top": 40,
         "padding_bottom": 20
-      }
+      },
+      "disabled": true
     },
     "featured-product": {
       "type": "featured-product",
@@ -107,7 +108,8 @@
         "enable_video_looping": true,
         "padding_top": 28,
         "padding_bottom": 48
-      }
+      },
+      "disabled": true
     },
     "rich_text_QdBgMR": {
       "type": "rich-text",
@@ -150,7 +152,8 @@
         "cta_banner": false,
         "padding_top": 40,
         "padding_bottom": 52
-      }
+      },
+      "disabled": true
     },
     "multicolumn_bjPPBE": {
       "type": "multicolumn",
@@ -212,13 +215,13 @@
         "button_link": "",
         "columns_desktop": 4,
         "column_alignment": "left",
-        "center_images": true,
-        "ht_style": "default",
+        "center_images": false,
+        "ht_style": "spec",
         "background_style": "primary",
         "color_scheme": "scheme-2",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "mobile_compact": true,
+        "mobile_compact": false,
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -235,19 +238,19 @@
         },
         "caption_Fxr8Bq": {
           "type": "caption",
-          "disabled": true,
           "settings": {
             "caption": "Know when to use every fly",
             "text_style": "caption-with-letter-spacing",
             "text_size": "medium"
-          }
+          },
+          "disabled": true
         },
         "text_DUrkAh": {
           "type": "text",
-          "disabled": true,
           "settings": {
             "text": "<p>The hardest part of fly fishing isn't casting; it's knowing what to tie on.</p>"
-          }
+          },
+          "disabled": true
         }
       },
       "block_order": [
@@ -258,13 +261,15 @@
       "name": "Fish Smarter, Not Harder - Title",
       "settings": {
         "desktop_content_position": "center",
-        "content_alignment": "center",
+        "content_alignment": "left",
         "color_scheme": "",
         "full_width": true,
-        "content_full_width": false,
+        "content_full_width": true,
         "cta_banner": false,
         "padding_top": 40,
-        "padding_bottom": 28
+        "padding_bottom": 28,
+        "ht_split": false,
+        "ht_standfirst": true
       }
     },
     "image_with_text_xHGEKA": {
@@ -275,7 +280,8 @@
           "settings": {
             "heading": "The hardest part of fly fishing isn't casting; it's knowing what to tie on.",
             "heading_size": "h2"
-          }
+          },
+          "disabled": true
         },
         "text_dbQr9A": {
           "type": "text",
@@ -313,7 +319,9 @@
         "section_color_scheme": "",
         "color_scheme": "scheme-1",
         "padding_top": 36,
-        "padding_bottom": 36
+        "padding_bottom": 36,
+        "ht_circle_image": true,
+        "ht_list_rows": true
       }
     },
     "rich_text_Vqk7V4": {
@@ -340,17 +348,99 @@
         "cta_banner": false,
         "padding_top": 40,
         "padding_bottom": 0
-      }
+      },
+      "disabled": true
     },
     "custom_liquid_AEjBkn": {
-      "type": "custom-liquid",
-      "name": "Patterns - custom Liquid",
+      "type": "ht-fly-atlas",
+      "name": "Patterns - expandable index",
       "settings": {
-        "custom_liquid": "<style>\n  .hatch-table-container {\n    background-color: #1E2E27; /* Deep Pine Green */\n    color: #ECF3EF; /* Soft Sage */\n    padding: 40px 20px;\n    font-family: 'Platypi', serif; /* Uses your theme font if loaded, else serif */\n    max-width: 1200px;\n    margin: 0 auto;\n  }\n  .hatch-grid {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 40px;\n  }\n  @media (min-width: 768px) {\n    .hatch-grid {\n      grid-template-columns: 1fr 1fr 1fr;\n      gap: 20px;\n    }\n  }\n  .hatch-column {\n    border-top: 1px solid #4A5D54; /* Subtle divider */\n    padding-top: 20px;\n  }\n  .hatch-header {\n    font-size: 1.2rem;\n    font-weight: 600;\n    margin-bottom: 25px;\n    text-transform: uppercase;\n    letter-spacing: 0.05em;\n    color: rgba(236, 243, 239, 0.65);\n  }\n  .fly-item {\n    margin-bottom: 30px;\n  }\n  .fly-name {\n    font-family: 'Platypi', serif;\n    font-size: 1.1rem;\n    font-weight: 500;\n    margin-bottom: 4px;\n    color: #FFFFFF;\n  }\n  .fly-details {\n    font-family: sans-serif;\n    font-size: 0.9rem;\n    opacity: 0.6;\n    margin-bottom: 8px;\n    font-style: italic;\n  }\n  .fly-desc {\n    font-family: sans-serif;\n    font-size: 0.95rem;\n    line-height: 1.5;\n    opacity: 0.6;\n  }\n\n  .fly-item {\n    display: grid;\n    grid-template-columns: 48px 1fr;\n    column-gap: 16px;\n  }\n  .fly-icon {\n    grid-column: 1;\n    grid-row: 1 / span 3;\n  }\n  .fly-icon img {\n    width: 100%;\n    height: auto;\n    display: block;\n    opacity: 0.95;\n  }\n  .fly-icon--wildcard {\n    font-family: 'Platypi', serif;\n    font-size: 1.7rem;\n    color: #ECF3EF;\n    opacity: 0.85;\n    line-height: 1.2;\n    text-align: center;\n  }\n  .fly-name, .fly-details, .fly-desc {\n    grid-column: 2;\n  }\n</style>\n\n<div class=\"hatch-table-container\">\n  <div class=\"hatch-grid\">\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Surface (Dries)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'parachute-adams-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Parachute Adams (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">The universal mayfly when fish are feeding on the surface.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'elk-hair-caddis-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Elk Hair Caddis (x5)</div>\n        <div class=\"fly-details\">Sizes 12</div>\n        <div class=\"fly-desc\">Floats high and stays visible. Great for rough waters.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Sub-Surface (Nymphs)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-pheasant-tail-nymph-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Pheasant Tail (x5)</div>\n        <div class=\"fly-details\">Sizes 16</div>\n        <div class=\"fly-desc\">The \"every-bug.\" Imitates almost any swimming nymph in the water column.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-hares-ear-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Hare’s Ear (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">Buggy, messy profile suggesting many insects.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Streamers & Utility</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'woolly-bugger-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Woolly Bugger (x3)</div>\n        <div class=\"fly-details\">Size 8 (Olive)</div>\n        <div class=\"fly-desc\">For searching deep pools. Looks like a leech, minnow, or crayfish.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon fly-icon--wildcard\">?</div>\n        <div class=\"fly-name\">WILDCARD FLIES (x3)</div>\n        <div class=\"fly-details\">Varied sizes</div>\n        <div class=\"fly-desc\">The fun but useful complements to your fly box. Varied additional flies with their description and instructions.</div>\n      </div>\n    </div>\n  </div>\n</div>",
+        "heading": "The Everyday Trout flies index",
+        "show_heading": false,
+        "heading_size": "h1",
         "color_scheme": "scheme-3",
         "padding_top": 0,
-        "padding_bottom": 52
-      }
+        "padding_bottom": 52,
+        "surface_label": "Surface (Dries)",
+        "subsurface_label": "Sub-Surface (Nymphs)",
+        "streamers_label": "Streamers & Utility"
+      },
+      "blocks": {
+        "adams": {
+          "type": "fly",
+          "settings": {
+            "category": "surface",
+            "name": "Parachute Adams (x5)",
+            "detail": "Sizes 14",
+            "description": "The universal mayfly when fish are feeding on the surface.",
+            "wildcard": false,
+            "image": "shopify://shop_images/parachute-adams-cream.png"
+          }
+        },
+        "caddis": {
+          "type": "fly",
+          "settings": {
+            "category": "surface",
+            "name": "Elk Hair Caddis (x5)",
+            "detail": "Sizes 12",
+            "description": "Floats high and stays visible. Great for rough waters.",
+            "wildcard": false,
+            "image": "shopify://shop_images/elk-hair-caddis-cream.png"
+          }
+        },
+        "pheasant": {
+          "type": "fly",
+          "settings": {
+            "category": "subsurface",
+            "name": "Pheasant Tail (x5)",
+            "detail": "Sizes 16",
+            "description": "The \"every-bug.\" Imitates almost any swimming nymph in the water column.",
+            "wildcard": false,
+            "image": "shopify://shop_images/beaded-pheasant-tail-nymph-cream.png"
+          }
+        },
+        "hare": {
+          "type": "fly",
+          "settings": {
+            "category": "subsurface",
+            "name": "Hare’s Ear (x5)",
+            "detail": "Sizes 14",
+            "description": "Buggy, messy profile suggesting many insects.",
+            "wildcard": false,
+            "image": "shopify://shop_images/beaded-hares-ear-cream.png"
+          }
+        },
+        "bugger": {
+          "type": "fly",
+          "settings": {
+            "category": "streamers",
+            "name": "Woolly Bugger (x3)",
+            "detail": "Size 8",
+            "description": "For searching deep pools. Looks like a leech, minnow, or crayfish.",
+            "wildcard": false,
+            "image": "shopify://shop_images/woolly-bugger-cream.png"
+          }
+        },
+        "wildcard": {
+          "type": "fly",
+          "settings": {
+            "category": "streamers",
+            "name": "WILDCARD FLIES (x3)",
+            "detail": "Varied sizes",
+            "description": "The fun but useful complements to your fly box. Varied additional flies with their description and instructions.",
+            "wildcard": true
+          }
+        }
+      },
+      "block_order": [
+        "adams",
+        "caddis",
+        "pheasant",
+        "hare",
+        "bugger",
+        "wildcard"
+      ],
+      "disabled": true
     },
     "rich_text_9fLxEn": {
       "type": "rich-text",
@@ -456,13 +546,14 @@
       "name": "Why you vs competitors - Title",
       "settings": {
         "desktop_content_position": "center",
-        "content_alignment": "center",
+        "content_alignment": "left",
         "color_scheme": "",
         "full_width": true,
-        "content_full_width": false,
+        "content_full_width": true,
         "cta_banner": false,
         "padding_top": 40,
-        "padding_bottom": 28
+        "padding_bottom": 28,
+        "ht_split": true
       }
     },
     "1758144760bb8dd7c4": {
@@ -591,21 +682,87 @@
         "padding_top": 40,
         "padding_bottom": 52
       }
+    },
+    "ht_hero": {
+      "type": "ht-hero",
+      "settings": {
+        "product": "the-everyday-trout",
+        "heading": "The Everyday Trout",
+        "subheading": "<p>Your all-season, all-purpose fly box, curated for trout anywhere.</p>",
+        "show_price": true,
+        "show_dynamic_checkout": true,
+        "image": "shopify://shop_images/ht-hero-cabin.png",
+        "mobile_crop": "right",
+        "overlay": 90,
+        "color_scheme": "scheme-3",
+        "transparent_header": true
+      }
+    },
+    "ht_specimen": {
+      "type": "ht-specimen-index",
+      "settings": {
+        "heading": "The Everyday Trout flies index",
+        "product": "the-everyday-trout",
+        "image": "shopify://shop_images/ht-blueprint-drawing.png",
+        "color_scheme": "scheme-1",
+        "padding_top": 96,
+        "padding_bottom": 96
+      }
+    },
+    "ht_why": {
+      "type": "ht-fly-drawer",
+      "settings": {
+        "heading": "Why this box exists",
+        "caption": "You don't need a hundred flies. You just need the right ones.",
+        "lede": "<p>A typical fly shop sells a hundred patterns. A typical trout day asks for three or four of them. The other 96 sit in a drawer.</p>",
+        "text": "<p>We built this box around the trout you'll actually fish for. We stripped away the clutter to curate a specific selection of patterns that cover the absolute most of trout feeding behavior. No guesswork. No filler. Just the confidence that you have exactly what you need.</p>",
+        "product": "the-everyday-trout",
+        "total": 100,
+        "keep_count": 4,
+        "columns": 10,
+        "color_scheme": "scheme-2",
+        "padding_top": 120,
+        "padding_bottom": 120
+      }
+    },
+    "ht_quote": {
+      "type": "ht-quote",
+      "settings": {
+        "rating": 4,
+        "quote": "This box finally made it click. Everything’s organized by where it fishes in the water column.",
+        "author": "Richard R. · Verified",
+        "color_scheme": "scheme-2",
+        "padding_top": 120,
+        "padding_bottom": 120,
+        "product": "the-everyday-trout"
+      }
+    },
+    "ht_buybar": {
+      "type": "ht-buy-bar",
+      "settings": {
+        "product": "the-everyday-trout",
+        "color_scheme": "scheme-1"
+      }
     }
   },
   "order": [
-    "rich-text",
-    "featured-product",
-    "rich_text_QdBgMR",
+    "ht_hero",
+    "ht_specimen",
+    "ht_why",
     "multicolumn_bjPPBE",
     "rich_text_PiJahn",
     "image_with_text_xHGEKA",
+    "ht_quote",
+    "rich_text_Rh4WHi",
+    "1758144760bb8dd7c4",
+    "rich_text_ABwGze",
+    "ht_buybar",
+    "rich-text",
+    "featured-product",
+    "rich_text_QdBgMR",
     "rich_text_Vqk7V4",
     "custom_liquid_AEjBkn",
     "rich_text_9fLxEn",
-    "rich_text_Kziimz",
-    "rich_text_Rh4WHi",
-    "1758144760bb8dd7c4",
-    "rich_text_ABwGze"
+    "rich_text_Kziimz"
   ]
 }

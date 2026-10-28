@@ -1,0 +1,135 @@
+{% doc %}
+  "What's hatching now": the monthly_hatch metaobjects as one month at a time.
+  All 12 months are rendered in the HTML (search engines, no-JS readers); ht-field-guide.js
+  shows the current month, or the month in the URL hash (#may), and switches on click.
+
+  Concealment: flies with is_surprise are never listed, and any note that names a surprise
+  fly is not rendered, unless it uses the approved wording "surprise <fly>" (e.g. "surprise stimulator fly").
+
+  @example
+  {% render 'ht-fg-hatch-calendar' %}
+{% enddoc %}
+{%- liquid
+  assign months = shop.metaobjects.monthly_hatch.values | sort: 'month_number'
+  assign surprise_names = ''
+  for fly in shop.metaobjects.every_day_trout_fly_box_content.values
+    if fly.is_surprise.value
+      assign surprise_base = fly.pattern.value | split: ' (' | first | remove: 'Wildcard ' | strip | downcase
+      assign surprise_names = surprise_names | append: surprise_base | append: '|'
+    endif
+  endfor
+  assign surprise_list = surprise_names | split: '|'
+-%}
+
+{%- if months.size > 0 -%}
+  <section class="ht-fg-hatch" id="whats-hatching-now" aria-labelledby="HatchNow-title" data-ht-fg-hatch>
+    <h2 class="ht-fg-hatch__title" id="HatchNow-title">What’s hatching now</h2>
+
+    <nav class="ht-fg-hatch__months" aria-label="Months">
+      <ul role="list">
+        {%- for month in months -%}
+          <li>
+            <a href="#{{ month.month.value | handleize }}" data-month="{{ month.month_number.value }}">
+              {{- month.month.value | slice: 0, 3 -}}
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    {%- for month in months -%}
+      {%- liquid
+        assign month_id = month.month.value | handleize
+        assign hidden_fields = ''
+        assign text_fields = 'summary,key_hatches,water_conditions,angler_notes,region_notes' | split: ','
+        for field in text_fields
+          assign field_text = month[field].value | downcase
+          for surprise in surprise_list
+            if surprise != blank
+              # "surprise <fly>" is the approved wording; any other mention of the fly is hidden.
+              assign allowed_phrase = 'surprise ' | append: surprise
+              assign check_text = field_text | remove: allowed_phrase
+              if check_text contains surprise
+                assign hidden_fields = hidden_fields | append: field | append: ','
+              endif
+            endif
+          endfor
+        endfor
+      -%}
+      <article
+        class="ht-fg-hatch__month"
+        id="{{ month_id }}"
+        data-month="{{ month.month_number.value }}"
+        aria-labelledby="{{ month_id }}-title"
+      >
+        <header class="ht-fg-hatch__head">
+          <h3 class="ht-fg-hatch__name" id="{{ month_id }}-title">{{ month.month.value }}</h3>
+          {%- if month.season.value != blank -%}
+            <p class="ht-fg-hatch__season">{{ month.season.value }}</p>
+          {%- endif -%}
+        </header>
+
+        {%- unless hidden_fields contains 'summary,' -%}{%- if month.summary.value != blank -%}
+          <p class="ht-fg-hatch__summary">{{ month.summary.value | newline_to_br }}</p>
+        {%- endif -%}{%- endunless -%}
+
+        <div class="ht-fg-hatch__grid">
+          {%- unless hidden_fields contains 'key_hatches,' -%}
+            {%- if month.key_hatches.value != blank -%}
+              <div class="ht-fg-hatch__block">
+                <h4 class="ht-fg-hatch__label">Key hatches</h4>
+                <p>{{ month.key_hatches.value | newline_to_br }}</p>
+              </div>
+            {%- endif -%}
+          {%- endunless -%}
+
+          <div class="ht-fg-hatch__block">
+            <h4 class="ht-fg-hatch__label">From the box</h4>
+            <ul class="ht-fg-hatch__flies" role="list">
+              {%- for fly in month.recommended_flies.value -%}
+                {%- unless fly.is_surprise.value -%}
+                  {%- assign icon = 'fg-fly-' | append: fly.system.handle | append: '.png' -%}
+                  <li class="ht-fg-hatch__fly">
+                    <img
+                      src="{{ icon | asset_url }}"
+                      alt=""
+                      width="48"
+                      height="48"
+                      loading="lazy"
+                      class="ht-fg-hatch__fly-icon"
+                    >
+                    <span class="ht-fg-hatch__fly-name">{{ fly.pattern.value }}</span>
+                    {%- if fly.size.value != blank -%}
+                      <span class="ht-fg-hatch__fly-size">size {{ fly.size.value }}</span>
+                    {%- endif -%}
+                  </li>
+                {%- endunless -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+        </div>
+
+        <div class="ht-fg-hatch__notes">
+          {%- unless hidden_fields contains 'water_conditions,' -%}{%- if month.water_conditions.value != blank -%}
+            <details class="ht-fg-hatch__note">
+              <summary>Water conditions</summary>
+              <p>{{ month.water_conditions.value | newline_to_br }}</p>
+            </details>
+          {%- endif -%}{%- endunless -%}
+          {%- unless hidden_fields contains 'angler_notes,' -%}{%- if month.angler_notes.value != blank -%}
+            <details class="ht-fg-hatch__note">
+              <summary>Angler notes</summary>
+              <p>{{ month.angler_notes.value | newline_to_br }}</p>
+            </details>
+          {%- endif -%}{%- endunless -%}
+          {%- unless hidden_fields contains 'region_notes,' -%}{%- if month.region_notes.value != blank -%}
+            <details class="ht-fg-hatch__note">
+              <summary>Region notes</summary>
+              <p>{{ month.region_notes.value | newline_to_br }}</p>
+            </details>
+          {%- endif -%}{%- endunless -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  </section>
+{%- endif -%}

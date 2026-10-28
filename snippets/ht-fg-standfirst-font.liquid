@@ -1,0 +1,14 @@
+{% doc %}
+  Loads the light weight of the heading font for Field Guide standfirsts (summary under titles).
+  Only Field Guide sections render this, so the rest of the site loads no extra font file.
+
+  @example
+  {% render 'ht-fg-standfirst-font' %}
+{% enddoc %}
+{%- assign ht_fg_light = settings.type_header_font | font_modify: 'weight', '300' -%}
+{%- if ht_fg_light != blank -%}
+  {% style %}
+    {{ ht_fg_light | font_face: font_display: 'swap' }}
+    .ht-fg { --ht-fg-standfirst-weight: 300; }
+  {% endstyle %}
+{%- endif -%}

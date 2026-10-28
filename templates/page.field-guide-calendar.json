@@ -1,0 +1,36 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "article": {
+      "type": "ht-field-guide-article",
+      "settings": {
+        "guide_page": "field-guide",
+        "guide_view": "",
+        "product": "the-everyday-trout",
+        "table_lookup": false,
+        "padding_top": 40,
+        "padding_bottom": 80,
+        "related_count": 3,
+        "article_view": "",
+        "lookup_intro": "Choose your fly size to find the right tippet.",
+        "lookup_title": "Tippet size calculator",
+        "lookup_position": "table",
+        "hatch_calendar": true,
+        "product_card_style": "blueprint",
+        "product_card_image": "shopify://shop_images/ht-blueprint-drawing.png",
+        "title_weight": "light"
+      }
+    }
+  },
+  "order": [
+    "article"
+  ]
+}

@@ -117,3 +117,31 @@
     margin-top: 0;
   }
 }
+
+
+/* HT 2026-10-27: Split layout (setting ht_split). Heading + caption left, text right, bottoms aligned. */
+@media screen and (min-width: 750px) {
+  .rich-text__blocks--ht-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: clamp(4rem, 6vw, 10rem); align-items: end; text-align: left; max-width: none; }
+  .rich-text__blocks--ht-split > * { grid-column: 1; margin-left: 0; margin-right: 0; text-align: left; }
+  .rich-text__blocks--ht-split > .rich-text__text { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin-top: 0; }
+  .rich-text__blocks--ht-split > .rich-text__text p { max-width: 54ch; }
+  .rich-text__blocks--ht-split > .rich-text__caption { margin-top: 1.8rem; }
+  .rich-text__blocks--ht-split > .rich-text__buttons { grid-column: 2; }
+}
+@media screen and (max-width: 749px) {
+  .rich-text__blocks--ht-split { text-align: left; }
+  .rich-text__blocks--ht-split > * { margin-left: 0; margin-right: 0; }
+}
+
+
+/* HT 2026-10-27: "Text as subtitle" (setting ht_standfirst). The text block reads as the heading's standfirst. */
+.rich-text__blocks--ht-standfirst > .rich-text__text { margin-top: 2rem; }
+.rich-text__blocks--ht-standfirst > .rich-text__text p {
+  max-width: 34ch;
+  font-family: var(--font-heading-family);
+  font-weight: var(--ht-display-weight, var(--font-heading-weight));
+  font-size: clamp(2.1rem, 1.9vw, 2.6rem);
+  line-height: 1.38;
+  color: rgb(var(--color-foreground));
+}
+.rich-text__blocks--ht-standfirst.center > .rich-text__text p { margin-left: auto; margin-right: auto; }

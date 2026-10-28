@@ -1,0 +1,111 @@
+/* Hatch Theory redesign, 2026-10-27. Global pieces shared by several sections:
+   display type weight, the cart restyle, and the sticky buy bar. Palette stays at the four theme colours. */
+
+:root { --ht-display-weight-fallback: var(--font-heading-weight); }
+.ht-display { font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); letter-spacing: -0.02em; }
+
+/* ---------- Cart drawer and cart page ---------- */
+cart-drawer .drawer__inner { padding: 0 2.4rem; }
+cart-drawer .drawer__header { padding: 2.4rem 0 1.6rem; border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.14); }
+cart-drawer .drawer__heading,
+.cart__items ~ * .title--primary,
+cart-items .title--primary {
+  font-family: var(--font-heading-family);
+  font-weight: var(--ht-display-weight, var(--font-heading-weight));
+  letter-spacing: -0.015em;
+}
+cart-drawer .drawer__heading { font-size: 3rem; line-height: 1; }
+cart-items .title--primary { font-size: clamp(4rem, 5vw, 6.4rem); line-height: 1; }
+cart-drawer .cart-items thead th,
+cart-items .cart-items thead th { font-size: 1.1rem; letter-spacing: 0.14em; opacity: 0.6; }
+cart-drawer .cart-item { border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.14); }
+cart-drawer .cart-item td { padding-bottom: 2rem; }
+cart-drawer .cart-item__media { width: 9.6rem; }
+cart-drawer .cart-item__image { width: 9.6rem; height: 9.6rem; object-fit: cover; }
+cart-drawer .cart-item__name,
+cart-items .cart-item__name {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-size: 1.8rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+cart-drawer .cart-item__name:hover,
+cart-items .cart-item__name:hover { text-decoration: underline; text-underline-offset: 0.3rem; }
+cart-drawer .cart-item__details > * + * { margin-top: 0.4rem; }
+cart-drawer .cart-drawer__footer { border-top: 0; padding-top: 2rem; }
+cart-drawer .totals,
+.cart__footer .totals { align-items: baseline; }
+cart-drawer .totals__total,
+.cart__footer .totals__total { font-family: var(--font-heading-family); font-weight: var(--font-heading-weight); font-size: 1.8rem; }
+cart-drawer .totals__total-value,
+.cart__footer .totals__total-value { font-family: var(--font-heading-family); font-size: 2rem; }
+cart-drawer .cart__ctas { margin-top: 2rem; }
+cart-drawer .cart__checkout-button,
+.cart__footer .cart__checkout-button {
+  --color-button: var(--color-foreground);
+  --color-button-text: var(--color-background);
+  min-height: 5.2rem;
+  letter-spacing: 0.04em;
+}
+.cart__footer { border-top: 0.1rem solid rgba(var(--color-foreground), 0.14); padding-top: 3.2rem; }
+
+/* ---------- Sticky buy bar ---------- */
+.ht-buybar {
+  position: fixed; left: 50%; bottom: 1.8rem; z-index: 12;
+  display: flex; align-items: center; gap: 1.6rem;
+  padding: 0.8rem 0.8rem 0.8rem 1rem;
+  background: rgba(var(--color-background), 0.94);
+  backdrop-filter: blur(12px);
+  border: 0.1rem solid rgba(var(--color-foreground), 0.14);
+  box-shadow: 0 1rem 4rem rgba(var(--color-foreground), 0.12);
+  transform: translate(-50%, 160%);
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.ht-buybar.is-visible { transform: translate(-50%, 0); }
+.ht-buybar__img { width: 4.4rem; height: 4.4rem; object-fit: cover; flex: none; }
+.ht-buybar__link { display: flex; align-items: center; gap: 1.6rem; color: inherit; text-decoration: none; }
+.ht-buybar__link:hover .ht-buybar__title { text-decoration: underline; text-underline-offset: 0.3rem; }
+.ht-buybar__title { display: block; margin: 0; font-family: var(--font-heading-family); font-size: 1.6rem; line-height: 1.15; white-space: nowrap; }
+.ht-buybar__price { display: block; margin: 0.2rem 0 0; font-size: 1.3rem; opacity: 0.7; }
+.ht-buybar .product-form { margin: 0; }
+.ht-buybar .product-form__buttons { max-width: none; }
+.ht-buybar .product-form__submit { min-height: 4.4rem; margin: 0; padding: 0 2.2rem; width: auto; }
+.ht-buybar .product-form__error-message-wrapper { display: none; }
+@media screen and (max-width: 749px) {
+  .ht-buybar { left: 1rem; right: 1rem; bottom: 1rem; transform: translateY(160%); }
+  .ht-buybar.is-visible { transform: none; }
+  .ht-buybar__title { white-space: normal; font-size: 1.5rem; }
+  .ht-buybar .product-form { margin-left: auto; }
+}
+@media (prefers-reduced-motion: reduce) { .ht-buybar { transition: none; } }
+
+
+/* ---------- Redesign type system (Theme settings > Hatch Theory > Redesign type system) ---------- */
+.ht-type .announcement-bar__message { font-size: 1.3rem; letter-spacing: 0.02em; }
+.ht-type #MainContent { line-height: 1.6; }
+/* Section headings: light display weight, tighter leading */
+.ht-type #MainContent :is(h1, h2).h1,
+.ht-type #MainContent :is(h1, h2).h0,
+.ht-type #MainContent .rich-text__heading.h1,
+.ht-type #MainContent .rich-text__heading.h0 {
+  font-weight: var(--ht-display-weight, var(--font-heading-weight));
+  font-size: clamp(3.4rem, 4.4vw, 6.4rem);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+}
+.ht-type #MainContent .rich-text__blocks--cta-banner .rich-text__heading {
+  font-weight: var(--ht-title-weight, var(--font-heading-weight));
+  font-size: clamp(3.2rem, 3.6vw, 4.8rem);
+  line-height: 1;
+}
+/* Titles: regular weight */
+.ht-type #MainContent :is(.multicolumn-card__info h3, .image-with-text--ht-rows li strong, .product__title h1, .product__title h2, .ht-fg-product__title, .card__heading),
+.ht-type :is(cart-drawer, cart-items) .cart-item__name,
+.ht-type :is(cart-drawer, .cart__footer) .totals__total {
+  font-weight: var(--ht-title-weight, var(--font-heading-weight));
+}
+.ht-type #MainContent .product__title h1 { font-size: clamp(3.4rem, 3.3vw, 5rem); line-height: 1.04; letter-spacing: -0.012em; }
+/* Buttons: smaller, medium weight */
+.ht-type .button,
+.ht-type .shopify-payment-button__button--unbranded { font-size: 1.4rem; font-weight: 500; letter-spacing: 0.02em; }

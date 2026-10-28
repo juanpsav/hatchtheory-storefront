@@ -1,0 +1,59 @@
+{% comment %}
+  Angler quote (Hatch Theory, 2026-10-27): one short review excerpt set large.
+{% endcomment %}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
+  .ht-quote { text-align: center; }
+  .ht-quote__stars { display: inline-flex; gap: 0.42rem; margin: 0; font-size: 1.4rem; line-height: 1; }
+  .ht-quote__star { position: relative; display: inline-block; color: rgba(var(--color-foreground), 0.22); }
+  .ht-quote__star-fill { position: absolute; left: 0; top: 0; overflow: hidden; color: rgb(var(--color-foreground)); }
+  .ht-quote__text { font-style: normal; border: 0; padding: 0; margin: 2.6rem auto; max-width: 26ch; font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); font-size: clamp(2.8rem, 3.2vw, 4.6rem); line-height: 1.18; letter-spacing: -0.01em; }
+  .ht-quote__cite { font-style: normal; font-size: 1.3rem; opacity: 0.65; }
+{%- endstyle -%}
+{%- if section.settings.quote != blank -%}
+  <section class="ht-quote color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+    <figure class="page-width{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}" style="margin-top:0;margin-bottom:0;">
+      {%- liquid
+        assign rating_value = 0
+        assign rating_max = 5
+        if section.settings.product != blank and section.settings.product.metafields.reviews.rating.value != blank
+          assign r = section.settings.product.metafields.reviews.rating.value
+          assign rating_value = r.rating | times: 1.0
+          assign rating_max = r.scale_max | times: 1.0
+        elsif section.settings.rating > 0
+          assign rating_value = section.settings.rating | times: 1.0
+        endif
+      -%}
+      {%- if rating_value > 0 -%}
+        {%- assign rating_on_five = rating_value | divided_by: rating_max | times: 5 -%}
+        <p class="ht-quote__stars" role="img" aria-label="{{ rating_value | round: 1 }} / {{ rating_max | round }}">
+          {%- for i in (1..5) -%}
+            {%- assign star_fill = rating_on_five | minus: forloop.index0 | at_least: 0 | at_most: 1 | times: 100 -%}
+            <span class="ht-quote__star" aria-hidden="true"><span class="ht-quote__star-fill" style="width: {{ star_fill | round: 1 }}%;">★</span>★</span>
+          {%- endfor -%}
+        </p>
+      {%- endif -%}
+      <blockquote class="ht-quote__text">{{ section.settings.quote | escape }}</blockquote>
+      {%- if section.settings.author != blank -%}<figcaption><cite class="ht-quote__cite">{{ section.settings.author | escape }}</cite></figcaption>{%- endif -%}
+    </figure>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Angler quote",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product", "info": "Stars show this product's average rating (reviews.rating metafield, kept up to date by the reviews app)." },
+    { "type": "range", "id": "rating", "label": "Stars without a product", "min": 0, "max": 5, "step": 1, "default": 5 },
+    { "type": "textarea", "id": "quote", "label": "Quote" },
+    { "type": "text", "id": "author", "label": "Author" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-2" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 120 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 120 }
+  ],
+  "presets": [{ "name": "Angler quote" }]
+}
+{% endschema %}

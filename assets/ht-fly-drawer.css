@@ -1,0 +1,17 @@
+/* Why this box exists: drawer of patterns (Hatch Theory, 2026-10-27) */
+.ht-drawer { overflow: clip; }
+.ht-drawer__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(4rem, 7vw, 12rem); align-items: center; }
+.ht-drawer__heading { margin: 0; font-size: clamp(3.4rem, 4.4vw, 6.4rem); line-height: 1.02; }
+.ht-drawer__caption { margin: 1.8rem 0 3rem; font-size: 1.2rem; font-weight: 500; letter-spacing: 0.12em; line-height: 1.4; opacity: 0.62; }
+.ht-drawer__lede p { margin: 0 0 1.6rem; max-width: 30ch; font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); font-size: clamp(2.1rem, 1.9vw, 2.6rem); line-height: 1.38; }
+.ht-drawer__body p { max-width: 52ch; opacity: 0.82; }
+.ht-drawer__grid { display: grid; grid-template-columns: repeat(var(--cols, 10), 1fr); gap: clamp(0.4rem, 0.7vw, 1rem); }
+.ht-drawer__cell { position: relative; aspect-ratio: 1; display: grid; place-items: center; transform: rotate(var(--r, 0deg)) scale(0.85); transition: opacity 1s cubic-bezier(0.2, 0.7, 0.1, 1) var(--d, 0ms); }
+.ht-drawer__cell img { width: 92%; height: 92%; object-fit: contain; opacity: 0.62; transition: opacity 1s, transform 1s cubic-bezier(0.2, 0.7, 0.1, 1); }
+.ht-drawer__cell.is-keep { transform: none; }
+.ht-drawer__cell.is-keep::after { content: ""; position: absolute; inset: -12%; border: 0.1rem solid rgb(var(--color-foreground)); border-radius: 50%; opacity: 0; transform: scale(0.7); transition: all 1s cubic-bezier(0.2, 0.7, 0.1, 1) 0.2s; }
+.ht-drawer__grid.is-sorted .ht-drawer__cell:not(.is-keep) { opacity: 0.1; }
+.ht-drawer__grid.is-sorted .is-keep img { opacity: 1; transform: scale(1.55); }
+.ht-drawer__grid.is-sorted .is-keep::after { opacity: 0.35; transform: none; }
+@media screen and (max-width: 989px) { .ht-drawer__inner { grid-template-columns: minmax(0, 1fr); } }
+@media (prefers-reduced-motion: reduce) { .ht-drawer__cell, .ht-drawer__cell img, .ht-drawer__cell.is-keep::after { transition: none; } }

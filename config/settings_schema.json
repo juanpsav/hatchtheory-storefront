@@ -1435,6 +1435,13 @@
         "default": false
       },
       {
+        "type": "checkbox",
+        "id": "ht_show_cart_tax_note",
+        "label": "Show tax and shipping note",
+        "info": "The line under the total in the cart drawer and cart page.",
+        "default": true
+      },
+      {
         "type": "header",
         "content": "t:settings_schema.cart.settings.cart_drawer.header"
       },
@@ -1449,6 +1456,25 @@
         "id": "cart_color_scheme",
         "label": "t:sections.all.colors.label",
         "default": "scheme-1"
+      }
+    ]
+  },
+  {
+    "name": "Hatch Theory",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "ht_light_display",
+        "label": "Light display headings",
+        "info": "Loads the light (300) weight of the heading font for large display headings.",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "ht_type_system",
+        "label": "Redesign type system",
+        "info": "Light section headings, regular-weight titles, smaller buttons and announcement, tighter body line height.",
+        "default": true
       }
     ]
   }

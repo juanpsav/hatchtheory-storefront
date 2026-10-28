@@ -6,6 +6,7 @@
   - product_form_id: {String} product form id.
   - section_id: {String} id of section to which this snippet belongs.
   - show_pickup_availability: {Boolean} for the pickup availability. If true the pickup availability is rendered, false - not rendered (optional).
+  - ht_quantity: {String} Hatch Theory quantity-selector markup to place beside Add to cart (optional).
 
   Usage:
   {% render 'buy-buttons', block: block, product: product, product_form_id: product_form_id, section_id: section.id, show_pickup_availability: true %}
@@ -69,12 +70,20 @@
             if product.selected_or_first_available_variant.quantity_rule.min > product.selected_or_first_available_variant.inventory_quantity and check_against_inventory
               assign quantity_rule_soldout = true
             endif
+            assign ht_primary_add_to_cart = false
+            if block.settings.ht_primary_add_to_cart or show_dynamic_checkout == false
+              assign ht_primary_add_to_cart = true
+            endif
           -%}
+          {%- if ht_quantity != blank -%}
+            <div class="product-form__ht-purchase-row">
+              {{ ht_quantity }}
+          {%- endif -%}
           <button
             id="ProductSubmitButton-{{ section_id }}"
             type="submit"
             name="add"
-            class="product-form__submit button button--full-width {% if show_dynamic_checkout %}button--secondary{% else %}button--primary{% endif %}"
+            class="product-form__submit button button--full-width {% if ht_primary_add_to_cart %}button--primary{% else %}button--secondary{% endif %}{% if block.settings.ht_primary_add_to_cart %} product-form__submit--ht-primary{% endif %}"
             {% if product.selected_or_first_available_variant.available == false
               or quantity_rule_soldout
               or product.selected_or_first_available_variant == null
@@ -93,6 +102,9 @@
             </span>
             {%- render 'loading-spinner' -%}
           </button>
+          {%- if ht_quantity != blank -%}
+            </div>
+          {%- endif -%}
           {%- if show_dynamic_checkout -%}
             {{ form | payment_button }}
           {%- endif -%}

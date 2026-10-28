@@ -1539,3 +1539,30 @@ a.product__text {
   font-weight: 600;
   color: inherit;
 }
+
+/* ============================================================
+   HT — Angler Reviews (Judge.me widget) brand alignment
+   Added 2026-08-18. The review widget ships with Judge.me's
+   default teal stars + system-font title. Two scoped fixes:
+     1. Stars recolored from Judge.me teal to brand ink; empty
+        stars muted. Palette rule: no new colors.
+     2. Title switched to the theme heading font (Platypi serif)
+        so it matches every other section heading on the page.
+   Button, histogram bars, and author name already use brand
+   ink, so they're left alone.
+   NOTE (2026-08-18): the earlier `:has(.jm-review-widget)`
+   hairline divider was REMOVED — a dark-band content section
+   now sits above the reviews and provides the separation.
+   ============================================================ */
+.jm-review-widget .jdgm-star {
+  color: rgb(var(--color-foreground)) !important;
+}
+.jm-review-widget .jdgm-star.jdgm--off {
+  color: rgba(var(--color-foreground), 0.22) !important;
+}
+.jm-review-widget-sidebar-header__title {
+  font-family: var(--font-heading-family) !important;
+  font-weight: 400 !important;
+  font-size: 2.4rem !important;
+  letter-spacing: 0.02em !important;
+}

@@ -1,0 +1,208 @@
+{%- comment -%}
+  HT — How to fish this box
+  Dark-band "how it works" section for the PDP, styled to match the
+  flies-index custom-liquid band (scheme-3, Platypi serif headings,
+  cream-at-opacity secondary text). Steps are schema blocks so copy is
+  editable in the theme editor; numbering is automatic (forloop.index).
+{%- endcomment -%}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.75);
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding">
+    <div class="ht-htf">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ht-htf__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="ht-htf__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="ht-htf__grid">
+        {%- for block in section.blocks -%}
+          <div class="ht-htf__step" {{ block.shopify_attributes }}>
+            <div class="ht-htf__num">{{ forloop.index }}</div>
+            {%- if block.settings.title != blank -%}
+              <div class="ht-htf__step-title">{{ block.settings.title }}</div>
+            {%- endif -%}
+            {%- if block.settings.text != blank -%}
+              <div class="ht-htf__step-text">{{ block.settings.text }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .ht-htf {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'Platypi', serif;
+  }
+  .ht-htf__title {
+    text-align: center;
+    font-family: 'Platypi', serif;
+    font-weight: 400;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    margin: 0 0 0.6rem;
+  }
+  .ht-htf__sub {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    opacity: 0.6;
+    max-width: 60ch;
+    margin: 0 auto 3.2rem;
+  }
+  .ht-htf__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-top: 2.4rem;
+  }
+  @media (min-width: 768px) {
+    .ht-htf__grid {
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 3.2rem;
+    }
+  }
+  .ht-htf__step {
+    border-top: 1px solid rgba(236, 243, 239, 0.18);
+    padding-top: 1.6rem;
+  }
+  .ht-htf__num {
+    font-family: 'Platypi', serif;
+    font-size: 2.2rem;
+    line-height: 1;
+    opacity: 0.35;
+    margin-bottom: 1rem;
+  }
+  .ht-htf__step-title {
+    font-family: 'Platypi', serif;
+    font-size: 1.35rem;
+    font-weight: 500;
+    margin-bottom: 0.6rem;
+  }
+  .ht-htf__step-text {
+    font-family: sans-serif;
+    font-size: 0.98rem;
+    line-height: 1.55;
+    opacity: 0.62;
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "HT — How to fish it",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "How to fish this box"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Three steps from box to first cast."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Step title",
+          "default": "Match the water column"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Step text",
+          "default": "Every fly is grouped by where trout feed: surface, sub-surface, or mid-water. Start with where you see activity."
+        }
+      ]
+    }
+  ],
+  "max_blocks": 4,
+  "presets": [
+    {
+      "name": "HT — How to fish it",
+      "blocks": [
+        {
+          "type": "step",
+          "settings": {
+            "title": "Match the water column",
+            "text": "Every fly is grouped by where trout feed: surface, sub-surface, or mid-water. Start with where you see activity."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Read the card",
+            "text": "Each pattern comes with when and how to fish it. No memorizing hatches, no guesswork."
+          }
+        },
+        {
+          "type": "step",
+          "settings": {
+            "title": "Tie on with confidence",
+            "text": "Pick the right fly for the day, tie it on, and learn as you go. That is the whole point of the box."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

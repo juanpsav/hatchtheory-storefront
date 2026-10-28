@@ -1,0 +1,237 @@
+{{ 'ht-field-guide.css' | asset_url | stylesheet_tag }}
+{%- render 'ht-fg-standfirst-font' -%}
+<script src="{{ 'ht-field-guide.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- liquid
+  assign entry = blank
+  for candidate in shop.metaobjects.field_guide_entry.values
+    if candidate.linked_page.value.handle == page.handle
+      assign entry = candidate
+      break
+    endif
+  endfor
+  assign guide = section.settings.guide_page
+  assign product = section.settings.product
+-%}
+
+<article class="page-width ht-fg ht-fg-article section-{{ section.id }}-padding{% if section.settings.title_weight == 'light' %} ht-fg--title-light{% endif %}">
+  <header class="ht-fg-article__header">
+    <div class="ht-fg-article__intro">
+      {%- if guide != blank -%}
+        <a class="ht-fg-article__back" href="{{ guide.url }}{% if section.settings.guide_view != blank %}?view={{ section.settings.guide_view }}{% endif %}">
+          <span aria-hidden="true">←</span> {{ guide.title | escape -}}
+        </a>
+      {%- endif -%}
+      <h1 class="ht-fg-article__title">{{ page.title | escape }}</h1>
+      {%- if entry != blank and entry.dek.value != blank -%}
+        <p class="ht-fg-article__dek">{{ entry.dek.value }}</p>
+      {%- endif -%}
+      {%- if entry != blank and entry.reading_time.value != blank -%}
+        <p class="ht-fg-article__meta">
+          {{ entry.pillar.value | capitalize }} · {{ entry.reading_time.value }}
+        </p>
+      {%- endif -%}
+    </div>
+    {%- if entry != blank -%}
+      <div class="ht-fg-article__plate">
+        {%- render 'ht-fg-plate', key: entry.system.handle, image: entry.thumbnail.value, eager: true, caption: true, sizes: '(min-width: 990px) 40vw, 100vw' -%}
+      </div>
+    {%- endif -%}
+  </header>
+
+  <div class="ht-fg-article__main">
+    {%- if section.settings.hatch_calendar -%}
+      {%- render 'ht-fg-hatch-calendar' -%}
+    {%- endif -%}
+
+  {%- liquid
+    assign article_html = page.content
+    if section.settings.table_lookup and page.content contains '<table'
+      capture lookup_panel
+        assign lookup_anchor = section.settings.lookup_title | default: 'lookup' | handleize
+        echo '<section class="ht-fg-lookup" id="' | append: lookup_anchor | append: '" data-ht-fg-lookup-panel aria-labelledby="' | append: lookup_anchor | append: '-title">'
+        if section.settings.lookup_title != blank
+          echo '<h2 class="ht-fg-lookup__title" id="' | append: lookup_anchor | append: '-title">' | append: section.settings.lookup_title | append: '</h2>'
+        endif
+        if section.settings.lookup_intro != blank
+          echo '<p class="ht-fg-lookup__intro">' | append: section.settings.lookup_intro | append: '</p>'
+        endif
+        echo '</section>'
+      endcapture
+      if section.settings.lookup_position == 'top' and page.content contains '</p>'
+        assign lookup_marker = '</p>' | append: lookup_panel
+        assign article_html = page.content | replace_first: '</p>', lookup_marker
+      else
+        assign lookup_marker = lookup_panel | append: '<table'
+        assign article_html = page.content | replace_first: '<table', lookup_marker
+      endif
+    endif
+  -%}
+  <div class="ht-fg-article__body rte" data-ht-fg-lookup="{{ section.settings.table_lookup }}">
+    {{ article_html }}
+  </div>
+
+  {%- if product != blank -%}
+    <aside class="ht-fg-article__product" aria-label="{{ product.title | escape }}">
+      {%- liquid
+        assign card_image = product.featured_image
+        assign card_style = section.settings.product_card_style | default: 'dark'
+        if card_style == 'blueprint' and section.settings.product_card_image != blank
+          assign card_image = section.settings.product_card_image
+        endif
+      -%}
+      <a class="ht-fg-product ht-fg-product--{{ card_style }}" href="{{ product.url }}">
+        {%- if card_image -%}
+          {{ card_image | image_url: width: 900 | image_tag: loading: 'lazy', sizes: '(min-width: 750px) 32rem, 80vw', widths: '300, 600, 900', class: 'ht-fg-product__img', alt: '' }}
+        {%- endif -%}
+        <div class="ht-fg-product__text">
+          <p class="ht-fg-product__title">{{ product.title | escape }}</p>
+          <p class="ht-fg-product__price">{{ product.price | money }}</p>
+          <span class="button button--primary ht-fg-product__button">{{ 'products.product.view_full_details' | t }}</span>
+        </div>
+      </a>
+    </aside>
+  {%- endif -%}
+  {%- if entry != blank and section.settings.related_count > 0 -%}
+    {%- liquid
+      assign related_limit = section.settings.related_count
+      assign ordered_entries = shop.metaobjects.field_guide_entry.values | sort: 'order'
+      assign related_handles = ''
+      for candidate in ordered_entries
+        if related_handles.size > 0
+          assign related_list = related_handles | split: ','
+          if related_list.size >= related_limit
+            break
+          endif
+        endif
+        if candidate.system.handle != entry.system.handle and candidate.pillar.value == entry.pillar.value and candidate.linked_page.value != blank
+          assign related_handles = related_handles | append: candidate.system.handle | append: ','
+        endif
+      endfor
+      for candidate in ordered_entries
+        assign related_list = related_handles | split: ','
+        if related_list.size >= related_limit
+          break
+        endif
+        unless related_handles contains candidate.system.handle or candidate.system.handle == entry.system.handle or candidate.linked_page.value == blank
+          assign related_handles = related_handles | append: candidate.system.handle | append: ','
+        endunless
+      endfor
+      assign related_list = related_handles | split: ','
+    -%}
+    {%- if related_list.size > 0 -%}
+      <section class="ht-fg-article__related" aria-labelledby="Related-{{ section.id }}">
+        <h2 class="ht-fg-article__related-title" id="Related-{{ section.id }}">
+          {%- if guide != blank -%}{{ guide.title | escape }}{%- else -%}{{ entry.pillar.value | capitalize }}{%- endif -%}
+        </h2>
+        <ul class="ht-fg-pillar__list ht-fg-list--rows" role="list">
+          {%- for related_handle in related_list -%}
+            {%- for candidate in ordered_entries -%}
+              {%- if candidate.system.handle == related_handle -%}
+                <li>{%- render 'ht-fg-entry', entry: candidate, view: section.settings.article_view, thumb: true -%}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+  {%- endif -%}
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "Field Guide article",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the page body with its Field Guide entry: summary, reading time, and plate. The entry is matched through its linked page."
+    },
+    { "type": "page", "id": "guide_page", "label": "Field Guide page" },
+    {
+      "type": "text",
+      "id": "guide_view",
+      "label": "Field Guide template preview",
+      "info": "Optional. Adds ?view=<value> to the back link while testing. Leave empty in production."
+    },
+    { "type": "product", "id": "product", "label": "Product link" },
+    {
+      "type": "checkbox",
+      "id": "hatch_calendar",
+      "label": "Show “What’s hatching now”",
+      "info": "Month-by-month hatches from the Monthly hatch entries, above the page body. Surprise flies are never shown.",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "related_count",
+      "min": 0,
+      "max": 3,
+      "step": 1,
+      "label": "Related entries",
+      "info": "Same pillar first, then the next entries in guide order.",
+      "default": 3
+    },
+    {
+      "type": "text",
+      "id": "article_view",
+      "label": "Article template preview",
+      "info": "Optional. Adds ?view=<value> to related links while testing. Leave empty in production."
+    },
+    {
+      "type": "checkbox",
+      "id": "table_lookup",
+      "label": "Turn the first table into a lookup",
+      "info": "Adds a picker above the article's first table: choose a value from the first column to see the last column. The table stays.",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "lookup_title",
+      "label": "Lookup heading",
+      "info": "Rendered as a heading in the page HTML, so search engines read it.",
+      "default": "Tippet size calculator",
+      "visible_if": "{{ section.settings.table_lookup }}"
+    },
+    {
+      "type": "text",
+      "id": "lookup_intro",
+      "label": "Lookup subtitle",
+      "default": "Choose your fly size to find the right tippet.",
+      "visible_if": "{{ section.settings.table_lookup }}"
+    },
+    {
+      "type": "select",
+      "id": "lookup_position",
+      "label": "Lookup position",
+      "default": "table",
+      "options": [
+        { "value": "top", "label": "After the first paragraph" },
+        { "value": "table", "label": "Just above the table" }
+      ],
+      "visible_if": "{{ section.settings.table_lookup }}"
+    },
+    { "type": "header", "content": "Section padding" },
+    { "type": "select", "id": "title_weight", "label": "Title weight", "default": "light", "options": [{ "value": "light", "label": "Light" }, { "value": "regular", "label": "Regular" }] },
+    { "type": "select", "id": "product_card_style", "label": "Product card", "default": "blueprint", "options": [{ "value": "blueprint", "label": "Blueprint drawing" }, { "value": "dark", "label": "Dark band with product photo" }] },
+    { "type": "image_picker", "id": "product_card_image", "label": "Blueprint drawing", "info": "Used by the Blueprint drawing card. Falls back to the product photo." },
+    { "type": "range", "id": "padding_top", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Top padding", "default": 40 },
+    { "type": "range", "id": "padding_bottom", "min": 0, "max": 100, "step": 4, "unit": "px", "label": "Bottom padding", "default": 80 }
+  ]
+}
+{% endschema %}

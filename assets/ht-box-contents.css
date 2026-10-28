@@ -1,0 +1,22 @@
+/* Product page box contents (Hatch Theory, 2026-10-27) */
+.ht-box { display: block; margin: 3.2rem 0 0; border-top: 0.1rem solid rgb(var(--color-foreground)); }
+.ht-box__table { width: 100%; border-collapse: collapse; font-size: 1.4rem; }
+.ht-box__table td { padding: 1.1rem 0; border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.14); vertical-align: middle; }
+.ht-box__row { cursor: pointer; transition: background 0.3s; }
+.ht-box__row:hover, .ht-box__row.is-on { background: rgba(var(--color-foreground), 0.05); }
+.ht-box__row:focus-visible { outline: 0.2rem solid rgb(var(--color-foreground)); outline-offset: -0.2rem; }
+.ht-box__row--extra { cursor: default; }
+.ht-box__row--extra:hover { background: none; }
+.ht-box__icon { width: 4.6rem; }
+.ht-box__icon img { width: 3.4rem; height: 3.4rem; object-fit: contain; display: block; }
+.ht-box__q { display: block; width: 3.4rem; text-align: center; font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); font-size: 2.4rem; line-height: 1; }
+.ht-box__name { display: block; font-family: var(--font-heading-family); font-size: 1.6rem; line-height: 1.2; }
+.ht-box__group { display: block; margin-top: 0.2rem; font-size: 1.1rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; }
+.ht-box__n, .ht-box__s { text-align: right; white-space: nowrap; opacity: 0.75; }
+.ht-box__n { padding-right: 1.8rem !important; font-variant-numeric: tabular-nums; }
+.ht-box__desc td { padding: 0 0 1.4rem; font-size: 1.3rem; line-height: 1.5; opacity: 0.8; }
+.ht-box__row:has(+ .ht-box__desc:not([hidden])) td { border-bottom: 0; }
+/* Frame drawn over the blueprint image in the gallery */
+.ht-box-frame { position: absolute; z-index: 2; pointer-events: none; border: 0.16rem solid rgb(var(--color-foreground)); border-radius: 0.8rem; box-shadow: 0 0 0 200vmax rgba(var(--color-background), 0.8); opacity: 0; transition: opacity 0.35s, left 0.4s, top 0.4s, width 0.4s, height 0.4s; }
+.ht-box-frame.is-on { opacity: 1; }
+.ht-box-host { overflow: hidden; }

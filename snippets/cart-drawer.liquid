@@ -518,6 +518,8 @@
             <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
           </div>
 
+          {%- comment -%} HT 2026-10-27: tax/shipping note behind a theme setting (Cart > Show tax and shipping note). {%- endcomment -%}
+          {%- if settings.ht_show_cart_tax_note -%}
           <small class="tax-note caption-large rte">
             {%- if cart.duties_included and cart.taxes_included -%}
               {%- if shop.shipping_policy.body == blank -%}
@@ -557,6 +559,7 @@
               {%- endif -%}
             {%- endif -%}
           </small>
+          {%- endif -%}
         </div>
 
         <!-- CTAs -->

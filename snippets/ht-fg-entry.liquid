@@ -1,0 +1,36 @@
+{% doc %}
+  Field Guide entry card: plate, title, summary and reading time, linked to the entry's page.
+
+  @param {object} entry - field_guide_entry metaobject
+  @param {string} [view] - Optional ?view= template suffix for preview links
+  @param {string} [heading_tag] - Heading element for the title (default h3)
+  @param {boolean} [thumb] - Use the square detail crop for the plate
+
+  @example
+  {% render 'ht-fg-entry', entry: entry, view: section.settings.article_view %}
+{% enddoc %}
+{%- assign target = entry.linked_page.value -%}
+{%- if target != blank -%}
+  {%- liquid
+    assign tag = heading_tag | default: 'h3'
+    assign preview_view = blank
+    if view != blank
+      if target.template_suffix == blank or target.template_suffix == 'page'
+        assign preview_view = view
+      endif
+    endif
+  -%}
+  <a href="{{ target.url }}{% if preview_view != blank %}?view={{ preview_view }}{% endif %}" class="ht-fg-entry">
+    {%- if thumb -%}{%- assign entry_sizes = '8rem' -%}{%- else -%}{%- assign entry_sizes = '(min-width: 990px) 25vw, 30vw' -%}{%- endif -%}
+    {%- render 'ht-fg-plate', key: entry.system.handle, image: entry.thumbnail.value, sizes: entry_sizes, thumb: thumb -%}
+    <div class="ht-fg-entry__text">
+      <{{ tag }} class="ht-fg-entry__title">{{ entry.title.value }}</{{ tag }}>
+      {%- if entry.dek.value != blank -%}
+        <p class="ht-fg-entry__dek">{{ entry.dek.value }}</p>
+      {%- endif -%}
+      {%- if entry.reading_time.value != blank -%}
+        <p class="ht-fg-entry__meta">{{ entry.reading_time.value }}</p>
+      {%- endif -%}
+    </div>
+  </a>
+{%- endif -%}

@@ -1,0 +1,23 @@
+{% doc %}
+  Loads the light (300) weight of the theme heading font for large display headings and sets
+  --ht-display-weight. Rendered once in layout/theme.liquid when Theme settings > Hatch Theory >
+  Light display headings is on. With Redesign type system on it also loads the regular (400) weight
+  for item titles (--ht-title-weight). When off, headings fall back to the heading weight.
+
+  @example
+  {% render 'ht-light-font' %}
+{% enddoc %}
+{%- assign ht_light = settings.type_header_font | font_modify: 'weight', '300' -%}
+{%- assign ht_regular = settings.type_header_font | font_modify: 'weight', '400' -%}
+{%- if ht_light != blank -%}
+  {% style %}
+    {{ ht_light | font_face: font_display: 'swap' }}
+    :root { --ht-display-weight: 300; }
+  {% endstyle %}
+{%- endif -%}
+{%- if settings.ht_type_system and ht_regular != blank -%}
+  {% style %}
+    {{ ht_regular | font_face: font_display: 'swap' }}
+    :root { --ht-title-weight: 400; }
+  {% endstyle %}
+{%- endif -%}

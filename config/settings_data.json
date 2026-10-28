@@ -16,7 +16,7 @@
     "heading_scale": 115,
     "type_body_font": "sans-serif",
     "body_scale": 100,
-    "page_width": 1200,
+    "page_width": 1400,
     "spacing_sections": 0,
     "spacing_grid_horizontal": 40,
     "spacing_grid_vertical": 40,
@@ -125,9 +125,12 @@
     "currency_code_enabled": true,
     "cart_type": "drawer",
     "show_vendor": true,
-    "show_cart_note": true,
+    "show_cart_note": false,
+    "ht_show_cart_tax_note": false,
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
+    "ht_light_display": true,
+    "ht_type_system": true,
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -151,11 +154,6 @@
       },
       "14060646107696862457": {
         "type": "shopify://apps/judge-me-reviews/blocks/judgeme_core/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-        "disabled": false,
-        "settings": {}
-      },
-      "11532412952436166569": {
-        "type": "shopify://apps/loox-reviews/blocks/loox-inject/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
         "disabled": false,
         "settings": {}
       },

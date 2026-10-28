@@ -1,0 +1,104 @@
+{% comment %}
+  Hybrid fly index: all names, quantities and icons remain visible.
+  Progressive enhancement opens one category's descriptions at a time.
+  Without JS and in the theme editor, every description is visible.
+  Wildcards never render an image.
+{% endcomment %}
+{{ 'ht-fly-atlas.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ht-fly-atlas.js' | asset_url }}" defer="defer"></script>
+
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+<section class="ht-atlas section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div class="page-width">
+    {% if section.settings.show_heading %}
+      <h2 class="ht-atlas__heading {{ section.settings.heading_size }}" id="AtlasHeading-{{ section.id }}">{{ section.settings.heading | escape }}</h2>
+    {% endif %}
+    <ht-fly-atlas class="ht-atlas__layout" role="region" aria-label="{{ section.settings.heading | escape }}">
+      {% assign categories = 'surface,subsurface,streamers' | split: ',' %}
+      <div class="ht-atlas__panels">
+        {% for category in categories %}
+          {% assign label_key = category | append: '_label' %}
+          {% capture description_ids %}{% for block in section.blocks %}{% if block.settings.category == category %}AtlasDescription-{{ section.id }}-{{ block.id }} {% endif %}{% endfor %}{% endcapture %}
+          <section class="ht-atlas__category" data-atlas-category aria-labelledby="AtlasCategory-{{ section.id }}-{{ category }}">
+            <h3 class="ht-atlas__category-heading" id="AtlasCategory-{{ section.id }}-{{ category }}">
+              <span data-atlas-static>{{ section.settings[label_key] | escape }}</span>
+              <button class="ht-atlas__toggle" type="button" aria-expanded="true" aria-controls="{{ description_ids | strip }}" hidden>
+                <span>{{ section.settings[label_key] | escape }}</span>
+                <svg aria-hidden="true" viewBox="0 0 20 20" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.25"><path d="m5 8 5 5 5-5"/></svg>
+              </button>
+            </h3>
+            <div class="ht-atlas__specimens">
+              {% for block in section.blocks %}
+                {% if block.settings.category == category %}
+                  <article class="ht-atlas__specimen" {{ block.shopify_attributes }}>
+                    <div class="ht-atlas__image">
+                      {% if block.settings.wildcard %}
+                        <span class="ht-atlas__mystery" aria-hidden="true">?</span>
+                      {% elsif block.settings.image != blank %}
+                        {{ block.settings.image | image_url: width: 192 | image_tag: widths: '64, 128, 192', sizes: '(min-width: 750px) 64px, 44px', loading: 'lazy', alt: '' }}
+                      {% endif %}
+                    </div>
+                    <div class="ht-atlas__caption">
+                      <h4 class="ht-atlas__name">{{ block.settings.name | escape }}</h4>
+                      <p class="ht-atlas__detail">{{ block.settings.detail | escape }}</p>
+                    </div>
+                    <p class="ht-atlas__description" id="AtlasDescription-{{ section.id }}-{{ block.id }}" data-atlas-description>{{ block.settings.description | escape }}</p>
+                  </article>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </section>
+        {% endfor %}
+      </div>
+    </ht-fly-atlas>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Fly reference plate",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading / accessible label", "default": "The Everyday Trout flies index"},
+    {"type": "checkbox", "id": "show_heading", "label": "Show heading", "default": false, "info": "Leave off when using the existing rich-text heading above this section."},
+    {"type": "select", "id": "heading_size", "label": "Heading size", "default": "h1", "options": [{"value": "h2", "label": "Small"}, {"value": "h1", "label": "Medium"}, {"value": "h0", "label": "Large"}]},
+    {"type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 0},
+    {"type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 100, "step": 4, "unit": "px", "default": 52},
+    {"type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-3"},
+    {"type": "text", "id": "surface_label", "label": "Surface category", "default": "Surface (Dries)"},
+    {"type": "text", "id": "subsurface_label", "label": "Subsurface category", "default": "Sub-Surface (Nymphs)"},
+    {"type": "text", "id": "streamers_label", "label": "Streamers category", "default": "Streamers & Utility"}
+  ],
+  "blocks": [
+    {
+      "type": "fly",
+      "name": "Fly",
+      "settings": [
+        {"type": "select", "id": "category", "label": "Category", "default": "surface", "options": [
+          {"value": "surface", "label": "Surface (Dries)"},
+          {"value": "subsurface", "label": "Sub-Surface (Nymphs)"},
+          {"value": "streamers", "label": "Streamers & Utility"}
+        ]},
+        {"type": "text", "id": "name", "label": "Fly name"},
+        {"type": "text", "id": "detail", "label": "Size and detail"},
+        {"type": "textarea", "id": "description", "label": "Description"},
+        {"type": "image_picker", "id": "image", "label": "Existing cream fly illustration"},
+        {"type": "checkbox", "id": "wildcard", "label": "Concealed wildcard", "default": false, "info": "Shows a question mark instead of an image. Never reveal the mystery flies."}
+      ]
+    }
+  ],
+  "presets": [{"name": "Fly reference plate"}]
+}
+{% endschema %}

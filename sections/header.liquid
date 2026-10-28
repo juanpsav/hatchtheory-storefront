@@ -142,8 +142,10 @@
         render 'header-drawer'
       endif
 
-      if section.settings.logo_position == 'top-center' or section.settings.menu == blank
-        render 'header-search', input_id: 'Search-In-Modal-1'
+      if section.settings.enable_search
+        if section.settings.logo_position == 'top-center' or section.settings.menu == blank
+          render 'header-search', input_id: 'Search-In-Modal-1'
+        endif
       endif
     -%}
 
@@ -247,7 +249,7 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
+      {%- if section.settings.enable_search -%}{% render 'header-search', input_id: 'Search-In-Modal' %}{%- endif -%}
 
       {%- if shop.customer_accounts_enabled -%}
         <a
@@ -568,6 +570,12 @@
       "id": "show_line_separator",
       "default": true,
       "label": "t:sections.header.settings.show_line_separator.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_search",
+      "default": true,
+      "label": "Enable search icon"
     },
     {
       "type": "header",

@@ -1,0 +1,78 @@
+{% doc %}
+  Box contents table for the product page (Hatch Theory, 2026-10-27). Reads the product's
+  custom.fly_box_content metaobjects. Tapping a row opens its description; hovering a row on
+  desktop switches the gallery to the blueprint image and frames that row in the drawing.
+
+  @param {object} block - main-product ht_box_contents block
+  @param {object} product - product
+  @param {object} section - main-product section
+
+  @example
+  {% render 'ht-box-contents', block: block, product: product, section: section %}
+{% enddoc %}
+{%- liquid
+  assign flies = product.metafields.custom.fly_box_content.value
+  assign wildcard_count = 0
+  for fly in flies
+    if fly.is_surprise.value == true
+      assign wildcard_count = wildcard_count | plus: fly.amount.value
+    endif
+  endfor
+  assign bp_media_id = ''
+  if block.settings.blueprint_position > 0
+    assign bp_index = block.settings.blueprint_position | minus: 1
+    assign bp_media = product.media[bp_index]
+    if bp_media != blank
+      assign bp_media_id = section.id | append: '-' | append: bp_media.id
+    endif
+  endif
+  assign groups = '1,2,3' | split: ','
+-%}
+{%- if flies != blank -%}
+  {{ 'ht-box-contents.css' | asset_url | stylesheet_tag }}
+  <script src="{{ 'ht-box-contents.js' | asset_url }}" defer="defer"></script>
+  <ht-box-contents class="ht-box" data-media-id="{{ bp_media_id }}" data-placement="{{ block.settings.drawing_placement | escape }}" {{ block.shopify_attributes }}>
+    <table class="ht-box__table">
+      <tbody>
+        {%- for group in groups -%}
+          {%- assign label_key = 'group_' | append: group | append: '_label' -%}
+          {%- assign types_key = 'group_' | append: group | append: '_types' -%}
+          {%- assign types = block.settings[types_key] | downcase | split: ',' -%}
+          {%- for fly in flies -%}
+            {%- if fly.is_surprise.value == true -%}{%- continue -%}{%- endif -%}
+            {%- assign fly_type = fly.type.value | downcase | strip -%}
+            {%- assign match = false -%}
+            {%- for t in types -%}{%- assign tt = t | strip -%}{%- if tt == fly_type -%}{%- assign match = true -%}{%- endif -%}{%- endfor -%}
+            {%- if match -%}
+              <tr class="ht-box__row" data-region="{{ fly.blueprint_region.value | escape }}" tabindex="0" aria-expanded="false" aria-controls="BoxDesc-{{ block.id }}-{{ fly.system.handle }}">
+                <td class="ht-box__icon">{%- if fly.icon.value != blank -%}{{ fly.icon.value | image_url: width: 120 | image_tag: loading: 'lazy', widths: '68, 120', sizes: '34px', alt: '' }}{%- endif -%}</td>
+                <td><span class="ht-box__name">{{ fly.short_name.value | default: fly.pattern.value | escape }}</span><span class="ht-box__group">{{ block.settings[label_key] | escape }}</span></td>
+                <td class="ht-box__n">×{{ fly.amount.value }}</td>
+                <td class="ht-box__s">{% render 'ht-fly-fields', fly: fly, field: 'detail', size_format: block.settings.size_format %}</td>
+              </tr>
+              {%- assign desc = fly.summary.value | default: fly.mimic_description.value -%}
+              {%- if desc != blank -%}
+                <tr class="ht-box__desc" id="BoxDesc-{{ block.id }}-{{ fly.system.handle }}" hidden><td></td><td colspan="3">{{ desc | escape }}</td></tr>
+              {%- endif -%}
+            {%- endif -%}
+          {%- endfor -%}
+          {%- assign wg = block.settings.wildcard_group | append: '' -%}
+          {%- if wildcard_count > 0 and wg == group and block.settings.wildcard_name != blank -%}
+            <tr class="ht-box__row" data-region="{{ block.settings.wildcard_region | escape }}" tabindex="0" aria-expanded="false" aria-controls="BoxDesc-{{ block.id }}-wildcard">
+              <td class="ht-box__icon"><span class="ht-box__q">?</span></td>
+              <td><span class="ht-box__name">{{ block.settings.wildcard_name | escape }}</span><span class="ht-box__group">{{ block.settings[label_key] | escape }}</span></td>
+              <td class="ht-box__n">×{{ wildcard_count }}</td>
+              <td class="ht-box__s">{{ block.settings.wildcard_detail | escape }}</td>
+            </tr>
+            {%- if block.settings.wildcard_description != blank -%}
+              <tr class="ht-box__desc" id="BoxDesc-{{ block.id }}-wildcard" hidden><td></td><td colspan="3">{{ block.settings.wildcard_description | escape }}</td></tr>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if block.settings.extra_row != blank -%}
+          <tr class="ht-box__row ht-box__row--extra"><td></td><td colspan="3"><span class="ht-box__name">{{ block.settings.extra_row | escape }}</span></td></tr>
+        {%- endif -%}
+      </tbody>
+    </table>
+  </ht-box-contents>
+{%- endif -%}

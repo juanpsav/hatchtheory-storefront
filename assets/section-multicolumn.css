@@ -362,3 +362,25 @@
     margin-top: 1.2rem;
   }
 }
+
+
+/* HT 2026-10-27: Specification strip. One ink rule above, hairline column dividers, no card fill,
+   icon and text aligned left. Doubled classes beat the background-primary card rules. */
+.multicolumn.multicolumn--ht-spec .multicolumn-list { border-top: 0.1rem solid rgb(var(--color-foreground)); column-gap: 0; row-gap: 0; }
+.multicolumn.multicolumn--ht-spec .multicolumn-list__item { padding: 0; }
+.multicolumn.multicolumn--ht-spec .multicolumn-card,
+.multicolumn.multicolumn--ht-spec.background-primary .multicolumn-card { background: transparent; border: 0; border-radius: 0; box-shadow: none; padding: 2.6rem 2.6rem 0 0; text-align: left; }
+.multicolumn.multicolumn--ht-spec .multicolumn-card__image-wrapper { margin: 0 0 2.2rem -0.6rem; padding: 0; width: 6.4rem; max-width: 6.4rem; }
+.multicolumn.multicolumn--ht-spec .multicolumn-card__info { padding: 0; text-align: left; }
+.multicolumn.multicolumn--ht-spec .multicolumn-card__info h3 { font-size: 2.2rem; line-height: 1.2; }
+.multicolumn.multicolumn--ht-spec .multicolumn-card__info .rte { margin-top: 1rem; font-size: 1.4rem; opacity: 0.78; max-width: 28ch; }
+@media screen and (min-width: 750px) {
+  .multicolumn.multicolumn--ht-spec .multicolumn-list__item + .multicolumn-list__item .multicolumn-card { border-left: 0.1rem solid rgba(var(--color-foreground), 0.16); padding-left: 2.6rem; }
+}
+@media screen and (max-width: 749px) {
+  .multicolumn.multicolumn--ht-spec .multicolumn-list__item { width: 100%; max-width: 100%; }
+  .multicolumn.multicolumn--ht-spec .multicolumn-card,
+  .multicolumn.multicolumn--ht-spec.background-primary .multicolumn-card { display: grid; grid-template-columns: 5.2rem minmax(0, 1fr); column-gap: 1.6rem; padding: 2rem 0; border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.16); }
+  .multicolumn.multicolumn--ht-spec .multicolumn-card__image-wrapper { width: 5.2rem; margin: 0; grid-row: span 2; }
+  .multicolumn.multicolumn--ht-spec .multicolumn-list__item + .multicolumn-list__item { margin-top: 0; }
+}

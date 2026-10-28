@@ -29,22 +29,6 @@
           "disabled": true,
           "settings": {}
         },
-        "loox_reviews_loox_rating_8wTTBa": {
-          "type": "shopify://apps/loox-reviews/blocks/loox-rating/5c3b337f-fd14-4df5-b1d6-80ec13e6e28e",
-          "disabled": true,
-          "settings": {
-            "contentSize": 16,
-            "pattern": "",
-            "hideText": false,
-            "alignment": "",
-            "layout": "",
-            "textColor": "#1e2e27",
-            "starColor": "",
-            "showAllReviews": false,
-            "looxOpenFloatingWidget": false,
-            "emptyRatingWidget": false
-          }
-        },
         "price": {
           "type": "price",
           "settings": {}
@@ -55,6 +39,7 @@
         },
         "description": {
           "type": "description",
+          "disabled": true,
           "settings": {}
         },
         "variant_picker": {
@@ -72,7 +57,9 @@
           "type": "buy_buttons",
           "settings": {
             "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
+            "show_gift_card_recipient": true,
+            "ht_inline_quantity": true,
+            "ht_primary_add_to_cart": true
           }
         },
         "share": {
@@ -80,19 +67,48 @@
           "settings": {
             "share_label": "Share"
           }
+        },
+        "ht_description_details": {
+          "type": "ht_description_details",
+          "settings": {
+            "heading": "Product details",
+            "open_by_default": false
+          }
+        },
+        "ht_intro": {
+          "type": "ht_intro",
+          "settings": {
+            "text": ""
+          }
+        },
+        "ht_box_contents": {
+          "type": "ht_box_contents",
+          "settings": {
+            "size_format": "Size [size]",
+            "wildcard_name": "WILDCARD FLIES",
+            "wildcard_detail": "Varied sizes",
+            "wildcard_description": "The fun but useful complements to your fly box. Varied additional flies with their description and instructions.",
+            "wildcard_group": "3",
+            "wildcard_region": "74.77 12.38 16.64 33.66",
+            "extra_row": "Waterproof field card",
+            "blueprint_position": 5,
+            "drawing_placement": "-4.57 10.01 108.34 80.02"
+          }
         }
       },
       "block_order": [
         "text",
         "title",
         "judge_me_reviews_preview_badge_WAYW8Y",
-        "loox_reviews_loox_rating_8wTTBa",
         "price",
         "rating",
         "description",
+        "ht_intro",
         "variant_picker",
         "quantity_selector",
         "buy_buttons",
+        "ht_box_contents",
+        "ht_description_details",
         "share"
       ],
       "custom_css": [
@@ -100,6 +116,7 @@
       ],
       "settings": {
         "enable_sticky_info": true,
+        "ht_editorial_desktop": true,
         "color_scheme": "scheme-1",
         "media_size": "medium",
         "constrain_to_viewport": true,
@@ -181,17 +198,99 @@
         "cta_banner": false,
         "padding_top": 28,
         "padding_bottom": 12
-      }
+      },
+      "disabled": true
     },
     "custom_liquid_qRn6gx": {
-      "type": "custom-liquid",
-      "name": "Patterns - Custom Liquid",
+      "type": "ht-fly-atlas",
+      "blocks": {
+        "adams": {
+          "type": "fly",
+          "settings": {
+            "category": "surface",
+            "name": "Parachute Adams (x5)",
+            "detail": "Sizes 14",
+            "description": "The universal mayfly when fish are feeding on the surface.",
+            "image": "shopify://shop_images/parachute-adams-cream.png",
+            "wildcard": false
+          }
+        },
+        "caddis": {
+          "type": "fly",
+          "settings": {
+            "category": "surface",
+            "name": "Elk Hair Caddis (x5)",
+            "detail": "Sizes 12",
+            "description": "Floats high and stays visible. Great for rough water.",
+            "image": "shopify://shop_images/elk-hair-caddis-cream.png",
+            "wildcard": false
+          }
+        },
+        "pheasant": {
+          "type": "fly",
+          "settings": {
+            "category": "subsurface",
+            "name": "Pheasant Tail (x5)",
+            "detail": "Sizes 16",
+            "description": "The \"every-bug.\" Imitates almost any swimming nymph in the water column.",
+            "image": "shopify://shop_images/beaded-pheasant-tail-nymph-cream.png",
+            "wildcard": false
+          }
+        },
+        "hare": {
+          "type": "fly",
+          "settings": {
+            "category": "subsurface",
+            "name": "Hare’s Ear (x5)",
+            "detail": "Sizes 14",
+            "description": "Buggy, messy profile suggesting many insects.",
+            "image": "shopify://shop_images/beaded-hares-ear-cream.png",
+            "wildcard": false
+          }
+        },
+        "bugger": {
+          "type": "fly",
+          "settings": {
+            "category": "streamers",
+            "name": "Woolly Bugger (x3)",
+            "detail": "Size 8",
+            "description": "For searching deep pools. Looks like a leech, minnow, or crayfish.",
+            "image": "shopify://shop_images/woolly-bugger-cream.png",
+            "wildcard": false
+          }
+        },
+        "wildcard": {
+          "type": "fly",
+          "settings": {
+            "category": "streamers",
+            "name": "WILDCARD FLIES (x3)",
+            "detail": "Varied sizes",
+            "description": "The fun but useful complements to your fly box. Varied additional flies with their description and instructions.",
+            "wildcard": true
+          }
+        }
+      },
+      "block_order": [
+        "adams",
+        "caddis",
+        "pheasant",
+        "hare",
+        "bugger",
+        "wildcard"
+      ],
+      "name": "Patterns - expandable index",
       "settings": {
-        "custom_liquid": "<style>\n  .hatch-table-container {\n    background-color: #1E2E27; /* Deep Pine Green */\n    color: #ECF3EF; /* Soft Sage */\n    padding: 40px 20px;\n    font-family: 'Platypi', serif; /* Uses your theme font if loaded, else serif */\n    max-width: 1200px;\n    margin: 0 auto;\n  }\n  .hatch-grid {\n    display: grid;\n    grid-template-columns: 1fr;\n    gap: 40px;\n  }\n  @media (min-width: 768px) {\n    .hatch-grid {\n      grid-template-columns: 1fr 1fr 1fr;\n      gap: 20px;\n    }\n  }\n  .hatch-column {\n    border-top: 1px solid #4A5D54; /* Subtle divider */\n    padding-top: 20px;\n  }\n  .hatch-header {\n    font-size: 1.2rem;\n    font-weight: 600;\n    margin-bottom: 25px;\n    text-transform: uppercase;\n    letter-spacing: 0.05em;\n    color: rgba(236, 243, 239, 0.65);\n  }\n  .fly-item {\n    margin-bottom: 30px;\n  }\n  .fly-name {\n    font-family: 'Platypi', serif;\n    font-size: 1.1rem;\n    font-weight: 500;\n    margin-bottom: 4px;\n    color: #FFFFFF;\n  }\n  .fly-details {\n    font-family: sans-serif;\n    font-size: 0.9rem;\n    opacity: 0.6;\n    margin-bottom: 8px;\n    font-style: italic;\n  }\n  .fly-desc {\n    font-family: sans-serif;\n    font-size: 0.95rem;\n    line-height: 1.5;\n    opacity: 0.6;\n  }\n\n  .fly-item {\n    display: grid;\n    grid-template-columns: 48px 1fr;\n    column-gap: 16px;\n  }\n  .fly-icon {\n    grid-column: 1;\n    grid-row: 1 / span 3;\n  }\n  .fly-icon img {\n    width: 100%;\n    height: auto;\n    display: block;\n    opacity: 0.95;\n  }\n  .fly-icon--wildcard {\n    font-family: 'Platypi', serif;\n    font-size: 1.7rem;\n    color: #ECF3EF;\n    opacity: 0.85;\n    line-height: 1.2;\n    text-align: center;\n  }\n  .fly-name, .fly-details, .fly-desc {\n    grid-column: 2;\n  }\n</style>\n\n<div class=\"hatch-table-container\">\n  <div class=\"hatch-grid\">\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Surface (Dries)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'parachute-adams-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Parachute Adams (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">The universal mayfly when fish are feeding on the surface.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'elk-hair-caddis-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Elk Hair Caddis (x5)</div>\n        <div class=\"fly-details\">Sizes 12</div>\n        <div class=\"fly-desc\">Floats high and stays visible. Great for rough water.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Sub-Surface (Nymphs)</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-pheasant-tail-nymph-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Pheasant Tail (x5)</div>\n        <div class=\"fly-details\">Sizes 16</div>\n        <div class=\"fly-desc\">The \"every-bug.\" Imitates almost any swimming nymph in the water column.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'beaded-hares-ear-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Hare’s Ear (x5)</div>\n        <div class=\"fly-details\">Sizes 14</div>\n        <div class=\"fly-desc\">Buggy, messy profile suggesting many insects.</div>\n      </div>\n    </div>\n\n    <div class=\"hatch-column\">\n      <div class=\"hatch-header\">Streamers & Utility</div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon\"><img src=\"{{ 'woolly-bugger-cream.png' | file_img_url: '120x' }}\" alt=\"\" width=\"48\" height=\"48\" loading=\"lazy\"></div>\n        <div class=\"fly-name\">Woolly Bugger (x3)</div>\n        <div class=\"fly-details\">Size 8 (Olive)</div>\n        <div class=\"fly-desc\">For searching deep pools. Looks like a leech, minnow, or crayfish.</div>\n      </div>\n      \n      <div class=\"fly-item\">\n        <div class=\"fly-icon fly-icon--wildcard\">?</div>\n        <div class=\"fly-name\">WILDCARD FLIES (x3)</div>\n        <div class=\"fly-details\">Varied sizes</div>\n        <div class=\"fly-desc\">The fun but useful complements to your fly box. Varied additional flies with their description and instructions.</div>\n      </div>\n    </div>\n  </div>\n</div>",
-        "color_scheme": "scheme-3",
+        "heading": "The Everyday Trout flies index",
+        "show_heading": false,
+        "heading_size": "h1",
         "padding_top": 0,
-        "padding_bottom": 0
-      }
+        "padding_bottom": 0,
+        "color_scheme": "scheme-3",
+        "surface_label": "Surface (Dries)",
+        "subsurface_label": "Sub-Surface (Nymphs)",
+        "streamers_label": "Streamers & Utility"
+      },
+      "disabled": true
     },
     "rich_text_aptbN4": {
       "type": "rich-text",
@@ -337,6 +436,105 @@
         "padding_bottom": 28
       }
     },
+    "collapsible_content_kbLeM6": {
+      "type": "collapsible-content",
+      "blocks": {
+        "collapsible_row_TzHkPE": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a good fly box for beginners?",
+            "icon": "ht_trout",
+            "row_content": "<p>Yes. The Everyday Trout Fly Box is built for beginner fly anglers who want to spend less time guessing and more time fishing. It includes a curated trout fly assortment across dry flies, nymphs, and streamers, plus a waterproof field card that helps you decide what to tie on at the water.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_BaJjHg": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Will these flies work where I fish?",
+            "icon": "ht_trout",
+            "row_content": "<p>Yes. The Everyday Trout Fly Box is built for common trout water, from small creeks and rivers to lakes. The patterns are proven across North America and cover the main ways trout feed through the season: dry flies for surface activity, nymphs for sub-surface feeding, and streamers for deeper water or searching. The goal is not to match every local hatch perfectly. It is to give you a practical trout fly assortment that works across the situations most anglers actually face.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_QfC4H4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How do I know which fly to use?",
+            "icon": "ht_trout",
+            "row_content": "<p>Start with what you see on the water. If trout are rising, try a dry fly like a Parachute Adams or Elk Hair Caddis. If nothing is visible, start below the surface with a Pheasant Tail or Hare’s Ear. If the water is deeper, darker, or you want to search, use a Woolly Bugger. The included waterproof field card walks you through the decision in plain language.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_j4G894": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "Is this a good gift for someone who fly fishes?",
+            "icon": "ht_trout",
+            "row_content": "<p>Yes. It’s a practical fly fishing gift for beginners, casual trout anglers, or anyone who wants a cleaner everyday setup. The box is gift-ready, easy to understand, and built around flies trout anglers actually use, not filler patterns that sit in a drawer.</p>",
+            "page": ""
+          }
+        },
+        "collapsible_row_jcgLnf": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "How big is the box, and will it fit in my pack?",
+            "icon": "ht_trout",
+            "row_content": "<p>Pocket-sized: 5.51″ × 3.74″ × 1.1″ (14 × 9.5 × 2.8 cm). It fits a jacket pocket, vest, sling, or pack without taking over your kit, and every fly sits held in foam so nothing shifts on the water.</p>",
+            "page": ""
+          }
+        }
+      },
+      "block_order": [
+        "collapsible_row_TzHkPE",
+        "collapsible_row_BaJjHg",
+        "collapsible_row_QfC4H4",
+        "collapsible_row_j4G894",
+        "collapsible_row_jcgLnf"
+      ],
+      "name": "FAQ",
+      "settings": {
+        "caption": "",
+        "heading": "Before you cast",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "container_color_scheme": "scheme-3",
+        "color_scheme": "scheme-3",
+        "open_first_collapsible_row": false,
+        "image_ratio": "adapt",
+        "desktop_layout": "image_second",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "ht_editorial": true
+      }
+    },
+    "178710095105debea5": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_all_reviews_text_TrNeCd": {
+          "type": "shopify://apps/judge-me-reviews/blocks/all_reviews_text/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "disabled": true,
+          "settings": {}
+        },
+        "judge_me_reviews_review_widget_Ajtg8m": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "real_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_all_reviews_text_TrNeCd",
+        "judge_me_reviews_review_widget_Ajtg8m"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "rich_text_imnaVm": {
       "type": "rich-text",
       "blocks": {
@@ -382,31 +580,10 @@
         "padding_bottom": 52
       }
     },
-    "1783351673013529ea": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_review_widget_yjHiAk": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "disabled": true,
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": false,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_review_widget_yjHiAk"
-      ],
+    "ht_buybar": {
+      "type": "ht-buy-bar",
       "settings": {
-        "include_margins": true
-      }
-    },
-    "178542571500889150": {
-      "type": "apps",
-      "settings": {
-        "include_margins": true
+        "color_scheme": "scheme-1"
       }
     }
   },
@@ -418,8 +595,9 @@
     "rich_text_aptbN4",
     "blocks_w7VAqJ",
     "related-products",
+    "collapsible_content_kbLeM6",
+    "178710095105debea5",
     "rich_text_imnaVm",
-    "1783351673013529ea",
-    "178542571500889150"
+    "ht_buybar"
   ]
 }

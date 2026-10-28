@@ -1,0 +1,22 @@
+{% doc %}
+  Formats one Fly Box Content metaobject for display. Outputs nothing; sets the variables below
+  through the `field` argument (Liquid snippets cannot return values, so each call prints one field).
+
+  @param {object} fly - every_day_trout_fly_box_content metaobject
+  @param {string} field - 'name' | 'detail'
+  @param {string} [name_format] - e.g. "[name] (x[count])"
+  @param {string} [size_format] - e.g. "Size [size]"
+
+  @example
+  {% render 'ht-fly-fields', fly: fly, field: 'name', name_format: section.settings.name_format %}
+{% enddoc %}
+{%- liquid
+  if field == 'name'
+    assign fly_name = fly.short_name.value | default: fly.pattern.value
+    assign fmt = name_format | default: '[name] (x[count])'
+    echo fmt | replace: '[name]', fly_name | replace: '[count]', fly.amount.value | escape
+  elsif field == 'detail'
+    assign fmt = size_format | default: 'Size [size]'
+    echo fmt | replace: '[size]', fly.size.value | escape
+  endif
+-%}

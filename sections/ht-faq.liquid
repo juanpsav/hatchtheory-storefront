@@ -1,0 +1,212 @@
+{%- comment -%}
+  HT — FAQ
+  Dark-band FAQ for the PDP, styled to match the flies-index band
+  (scheme-3, Platypi serif questions, cream-at-opacity answers, hairline
+  dividers). Q&A pairs are schema blocks (editable in the theme editor).
+  Answers are always-visible (not collapsed) so the content is crawlable
+  for AI/organic discovery.
+{%- endcomment -%}
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: calc({{ section.settings.padding_top }}px * 0.75);
+    padding-bottom: calc({{ section.settings.padding_bottom }}px * 0.75);
+  }
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
+  <div class="section-{{ section.id }}-padding">
+    <div class="ht-faq">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="ht-faq__title">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="ht-faq__sub">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+
+      <div class="ht-faq__list">
+        {%- for block in section.blocks -%}
+          <div class="ht-faq__item" {{ block.shopify_attributes }}>
+            {%- if block.settings.question != blank -%}
+              <div class="ht-faq__q">{{ block.settings.question }}</div>
+            {%- endif -%}
+            {%- if block.settings.answer != blank -%}
+              <div class="ht-faq__a rte">{{ block.settings.answer }}</div>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{%- style -%}
+  .ht-faq {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 0 20px;
+    font-family: 'Platypi', serif;
+  }
+  .ht-faq__title {
+    text-align: center;
+    font-family: 'Platypi', serif;
+    font-weight: 400;
+    font-size: 3.2rem;
+    line-height: 1.1;
+    margin: 0 0 0.6rem;
+  }
+  .ht-faq__sub {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.5;
+    opacity: 0.6;
+    max-width: 60ch;
+    margin: 0 auto 3rem;
+  }
+  .ht-faq__list {
+    margin-top: 2.4rem;
+  }
+  .ht-faq__item {
+    border-top: 1px solid rgba(236, 243, 239, 0.18);
+    padding: 1.8rem 0;
+  }
+  .ht-faq__item:last-child {
+    border-bottom: 1px solid rgba(236, 243, 239, 0.18);
+  }
+  .ht-faq__q {
+    font-family: 'Platypi', serif;
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 0.7rem;
+  }
+  .ht-faq__a {
+    font-family: sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+    opacity: 0.65;
+  }
+  .ht-faq__a p {
+    margin: 0 0 0.6rem;
+  }
+  .ht-faq__a p:last-child {
+    margin-bottom: 0;
+  }
+  .ht-faq__a a {
+    color: inherit;
+    text-decoration: underline;
+  }
+{%- endstyle -%}
+
+{% schema %}
+{
+  "name": "HT — FAQ",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Before you cast"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "The questions new fly anglers ask us most."
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "Section padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding top",
+      "default": 56
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Padding bottom",
+      "default": 56
+    }
+  ],
+  "blocks": [
+    {
+      "type": "qa",
+      "name": "Question",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "Do I need anything else to start?"
+        },
+        {
+          "type": "richtext",
+          "id": "answer",
+          "label": "Answer",
+          "default": "<p>Just a rod, reel, line, and leader. The box covers the flies and tells you when to use each one.</p>"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "HT — FAQ",
+      "blocks": [
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need anything else to start?",
+            "answer": "<p>Just a rod, reel, line, and leader. The box covers the flies and includes a card telling you when and how to fish each one.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Will these flies work where I fish?",
+            "answer": "<p>Yes. These are proven trout patterns tested across North America, from mountain streams to tailwaters. They cover the way trout feed just about everywhere.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "What if I don't know what's hatching?",
+            "answer": "<p>You don't have to. The box is organized by water column, and the instruction card tells you what to reach for. That's the whole idea.</p>"
+          }
+        },
+        {
+          "type": "qa",
+          "settings": {
+            "question": "Is it a good gift?",
+            "answer": "<p>It's built to be. The box arrives gift-ready, and it's approachable enough for someone brand new to fly fishing.</p>"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

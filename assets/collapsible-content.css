@@ -126,3 +126,22 @@
     }
   }
 }
+
+
+/* HT 2026-10-27: Editorial layout (setting ht_editorial). Heading sticks on the left at desktop,
+   questions run down the right, hairline rules, larger serif questions. */
+@media screen and (min-width: 990px) {
+  .collapsible-content--ht-editorial .collapsible-content-wrapper-narrow {
+    max-width: var(--page-width); padding: 0 5rem;
+    display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: clamp(4rem, 6vw, 10rem); align-items: start;
+  }
+  .collapsible-content--ht-editorial .collapsible-content__header { position: sticky; top: 4rem; text-align: left !important; }
+  .collapsible-content--ht-editorial .collapsible-content__grid { margin-top: 0; display: block; }
+  .collapsible-content--ht-editorial .collapsible-content__grid > .grid__item { width: 100%; max-width: 100%; padding: 0; }
+}
+.collapsible-content--ht-editorial .collapsible-content__heading { font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); font-size: clamp(3.4rem, 4.4vw, 6.4rem); line-height: 1.02; }
+.collapsible-content--ht-editorial .accordion { border-top: 0.1rem solid rgba(var(--color-foreground), 0.18); border-bottom: 0; margin-top: 0; }
+.collapsible-content--ht-editorial .accordion:last-child { border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.18); }
+.collapsible-content--ht-editorial .accordion summary { padding: 2.4rem 0; }
+.collapsible-content--ht-editorial .accordion__title { font-family: var(--font-heading-family); font-weight: var(--ht-display-weight, var(--font-heading-weight)); font-size: clamp(2rem, 1.8vw, 2.6rem); line-height: 1.25; }
+.collapsible-content--ht-editorial .accordion__content { padding: 0 0 2.6rem; font-size: 1.5rem; opacity: 0.78; max-width: 56ch; }

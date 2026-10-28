@@ -10,6 +10,7 @@
   {% endif %}
 >
   {{ 'section-main-product.css' | asset_url | stylesheet_tag }}
+  {{ 'ht-product-editorial.css' | asset_url | stylesheet_tag }}
   {{ 'component-accordion.css' | asset_url | stylesheet_tag }}
   {{ 'component-price.css' | asset_url | stylesheet_tag }}
   {{ 'component-slider.css' | asset_url | stylesheet_tag }}
@@ -73,8 +74,8 @@
   {%- endif -%}
 
   {% assign variant_images = product.images | where: 'attached_to_variant?', true | map: 'src' %}
-  <div class="page-width">
-    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
+  <div class="page-width{% if section.settings.ht_editorial_desktop %} page-width--ht-product{% endif %}">
+    <div class="product product--{{ section.settings.media_size }} product--{{ section.settings.media_position }} product--{{ section.settings.gallery_layout }} product--mobile-{{ section.settings.mobile_thumbnails }}{% if section.settings.ht_editorial_desktop %} product--ht-editorial{% endif %} grid grid--1-col {% if product.media.size > 0 %}grid--2-col-tablet{% else %}product--no-media{% endif %}">
       <div class="grid__item product__media-wrapper">
         {% render 'product-media-gallery', variant_images: variant_images %}
       </div>
@@ -195,6 +196,45 @@
                     {{ product.description }}
                   </div>
                 {%- endif -%}
+              {%- when 'ht_intro' -%}
+                {%- comment -%} HT 2026-09-30: short PDP intro from the text setting, or the product's custom.pdp_intro metafield. {%- endcomment -%}
+                {%- liquid
+                  assign ht_intro_html = block.settings.text
+                  if ht_intro_html == blank and product.metafields.custom.pdp_intro != blank
+                    assign ht_intro_html = product.metafields.custom.pdp_intro | metafield_tag
+                  endif
+                -%}
+                {%- if ht_intro_html != blank -%}
+                  <div class="product__description product__ht-intro rte quick-add-hidden" {{ block.shopify_attributes }}>
+                    {{ ht_intro_html }}
+                  </div>
+                {%- endif -%}
+              {%- when 'ht_box_contents' -%}
+                {%- comment -%} HT 2026-10-27: box contents from the Fly Box Content metaobjects; rows highlight their place in the blueprint image. {%- endcomment -%}
+                {%- render 'ht-box-contents', block: block, product: product, section: section -%}
+              {%- when 'ht_description_details' -%}
+                {%- comment -%} HT 2026-09-30: collapsible details from custom.pdp_details, falling back to the product description. {%- endcomment -%}
+                {%- liquid
+                  assign ht_details_html = product.description
+                  if product.metafields.custom.pdp_details != blank
+                    assign ht_details_html = product.metafields.custom.pdp_details | metafield_tag
+                  endif
+                -%}
+                {%- if ht_details_html != blank -%}
+                  <div class="product__accordion product__ht-details accordion quick-add-hidden" {{ block.shopify_attributes }}>
+                    <details id="Details-{{ block.id }}-{{ section.id }}"{% if block.settings.open_by_default %} open{% endif %}>
+                      <summary>
+                        <div class="summary__title">
+                          <h2 class="h4 accordion__title inline-richtext">{{ block.settings.heading | escape }}</h2>
+                        </div>
+                        {{- 'icon-caret.svg' | inline_asset_content -}}
+                      </summary>
+                      <div class="accordion__content product__description rte" id="ProductAccordion-{{ block.id }}-{{ section.id }}">
+                        {{ ht_details_html }}
+                      </div>
+                    </details>
+                  </div>
+                {%- endif -%}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -226,6 +266,17 @@
                   </details>
                 </div>
               {%- when 'quantity_selector' -%}
+                {%- comment -%} HT 2026-09-30: optional inline quantity keeps original IDs and moves markup beside Add to cart. {%- endcomment -%}
+                {%- liquid
+                  assign ht_inline_quantity = false
+                  assign ht_quantity_index = forloop.index
+                  for ht_block in section.blocks
+                    if ht_block.type == 'buy_buttons' and forloop.index > ht_quantity_index and ht_block.settings.ht_inline_quantity
+                      assign ht_inline_quantity = true
+                    endif
+                  endfor
+                -%}
+                {%- capture ht_quantity_markup -%}
                 <div
                   id="Quantity-Form-{{ section.id }}"
                   class="product-form__input product-form__quantity{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} product-form__quantity-top{% endif %}"
@@ -452,6 +503,10 @@
                     </volume-pricing>
                   {%- endif -%}
                 </div>
+                {%- endcapture -%}
+                {%- unless ht_inline_quantity -%}
+                  {{ ht_quantity_markup }}
+                {%- endunless -%}
               {%- when 'popup' -%}
                 <modal-opener
                   class="product-popup-modal__opener quick-add-hidden"
@@ -476,12 +531,19 @@
               {%- when 'variant_picker' -%}
                 {% render 'product-variant-picker', product: product, block: block, product_form_id: product_form_id %}
               {%- when 'buy_buttons' -%}
+                {%- liquid
+                  assign ht_buy_quantity = blank
+                  if ht_inline_quantity
+                    assign ht_buy_quantity = ht_quantity_markup
+                  endif
+                -%}
                 {%- render 'buy-buttons',
                   block: block,
                   product: product,
                   product_form_id: product_form_id,
                   section_id: section.id,
-                  show_pickup_availability: true
+                  show_pickup_availability: true,
+                  ht_quantity: ht_buy_quantity
                 -%}
               {%- when 'rating' -%}
                 {%- if product.metafields.reviews.rating.value != blank -%}
@@ -923,6 +985,19 @@
           "default": true,
           "label": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.label",
           "info": "t:sections.main-product.blocks.buy_buttons.settings.show_gift_card_recipient.info"
+        },
+        {
+          "type": "checkbox",
+          "id": "ht_inline_quantity",
+          "default": false,
+          "label": "Place quantity beside Add to cart",
+          "info": "Uses the Quantity selector block placed above this block."
+        },
+        {
+          "type": "checkbox",
+          "id": "ht_primary_add_to_cart",
+          "default": false,
+          "label": "Make Add to cart the primary button"
         }
       ]
     },
@@ -930,6 +1005,70 @@
       "type": "description",
       "name": "t:sections.main-product.blocks.description.name",
       "limit": 1
+    },
+    {
+      "type": "ht_intro",
+      "name": "Intro",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Short summary above the buy buttons. Edit it in Admin > Products > Metafields > PDP intro, or type text here to override it."
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Override text"
+        }
+      ]
+    },
+    {
+      "type": "ht_box_contents",
+      "name": "Box contents",
+      "limit": 1,
+      "settings": [
+        { "type": "paragraph", "content": "Rows come from the product's Fly Box Content metafield. Edit names, sizes, descriptions, icons and blueprint regions in Admin > Content > Metaobjects > Fly Box Content. Surprise flies are only counted into the wildcard row." },
+        { "type": "text", "id": "size_format", "label": "Size format", "default": "Size [size]" },
+        { "type": "text", "id": "group_1_label", "label": "Group 1 label", "default": "Surface (Dries)" },
+        { "type": "text", "id": "group_1_types", "label": "Group 1 types", "default": "Dry" },
+        { "type": "text", "id": "group_2_label", "label": "Group 2 label", "default": "Sub-Surface (Nymphs)" },
+        { "type": "text", "id": "group_2_types", "label": "Group 2 types", "default": "Nymph" },
+        { "type": "text", "id": "group_3_label", "label": "Group 3 label", "default": "Streamers & Utility" },
+        { "type": "text", "id": "group_3_types", "label": "Group 3 types", "default": "Streamer" },
+        { "type": "header", "content": "Wildcard row" },
+        { "type": "text", "id": "wildcard_name", "label": "Name", "default": "WILDCARD FLIES" },
+        { "type": "text", "id": "wildcard_detail", "label": "Detail", "default": "Varied sizes" },
+        { "type": "textarea", "id": "wildcard_description", "label": "Description", "default": "The fun but useful complements to your fly box. Varied additional flies with their description and instructions." },
+        { "type": "select", "id": "wildcard_group", "label": "Group", "default": "3", "options": [{ "value": "1", "label": "Group 1" }, { "value": "2", "label": "Group 2" }, { "value": "3", "label": "Group 3" }] },
+        { "type": "text", "id": "wildcard_region", "label": "Blueprint region", "default": "74.77 12.38 16.64 33.66" },
+        { "type": "text", "id": "extra_row", "label": "Last row", "default": "Waterproof field card", "info": "Optional item listed after the flies." },
+        { "type": "header", "content": "Blueprint image" },
+        { "type": "range", "id": "blueprint_position", "label": "Blueprint image position in the gallery", "min": 0, "max": 10, "step": 1, "default": 5, "info": "0 turns the highlight off." },
+        { "type": "text", "id": "drawing_placement", "label": "Drawing placement in that image", "default": "-4.57 10.01 108.34 80.02", "info": "Left, top, width and height of the blueprint drawing inside the product image, in percent." }
+      ]
+    },
+    {
+      "type": "ht_description_details",
+      "name": "Description (collapsible)",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "paragraph",
+          "content": "Shows Admin > Products > Metafields > PDP details. If that field is empty, the product description is shown instead."
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Product details"
+        },
+        {
+          "type": "checkbox",
+          "id": "open_by_default",
+          "label": "Open by default",
+          "default": false
+        }
+      ]
     },
     {
       "type": "share",
@@ -2092,6 +2231,13 @@
       "id": "enable_sticky_info",
       "default": true,
       "label": "t:sections.main-product.settings.enable_sticky_info.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "ht_editorial_desktop",
+      "default": false,
+      "label": "Editorial desktop layout",
+      "info": "Desktop only: wider gallery, vertical thumbnails, aligned purchase column, and softer zoom control."
     },
     {
       "type": "color_scheme",

@@ -1,0 +1,123 @@
+{% doc %}
+  Renders a Field Guide plate: the entry's thumbnail metaobject image when set,
+  otherwise the bundled public-domain plate (assets/fg-plate-<key>.jpg).
+
+  @param {string} key - Metaobject entry handle, or 'hero' for the index plate
+  @param {object} [image] - Optional image from the entry's thumbnail field
+  @param {string} [sizes] - Responsive sizes attribute
+  @param {boolean} [eager] - Load immediately (first screen)
+  @param {boolean} [caption] - Show the source caption
+  @param {boolean} [thumb] - Use the square detail crop (assets/fg-thumb-<key>.jpg) for small index rows
+
+  @example
+  {% render 'ht-fg-plate', key: entry.system.handle, image: entry.thumbnail.value, sizes: '50vw', caption: true %}
+{% enddoc %}
+{%- liquid
+  case key
+    when 'hero'
+      assign plate_title = 'Trout and grayling'
+      assign plate_source = 'Alfred Ronalds, The Fly-Fisher’s Entomology, 1839'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:The_fly-fisher%27s_entomology_-_illustrated_by_coloured_representations_of_the_natural_and_artificial_insect,_and_accompanied_by_a_few_observations_and_instructions_relative_to_trout-and-grayling_(14804493853).jpg'
+      assign plate_w = 1400
+      assign plate_h = 731
+    when 'why-six-flies-not-sixty'
+      assign plate_title = 'Natural and artificial flies'
+      assign plate_source = 'Alfred Ronalds, The Fly-Fisher’s Entomology, 1901 edition'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:The_fly-fisher%27s_entomology_(9719876184).jpg'
+      assign plate_w = 953
+      assign plate_h = 1400
+    when 'the-hatch-calendar'
+      assign plate_title = 'Green drake and grey drake'
+      assign plate_source = 'Alfred Ronalds, The Fly-Fisher’s Entomology, 1849'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:PlateXIII-Green_and_GrayDrake.jpg'
+      assign plate_w = 810
+      assign plate_h = 1359
+    when 'how-to-use-your-hatch-theory-box'
+      assign plate_title = 'Hooks and dressed flies'
+      assign plate_source = 'Alfred Ronalds, The Fly-Fisher’s Entomology, 1836'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:The_fly-fisher%27s_entomology_-_Illustrated_by_coloured_representations_of_the_natural_and_artificial_insect,_and_accompanied_by_a_few_observations_and_instructions_relative_to_trout-and-grayling_(14782736592).jpg'
+      assign plate_w = 778
+      assign plate_h = 1400
+    when 'dry-nymph-or-streamer'
+      assign plate_title = 'Mayfly nymphs and adults'
+      assign plate_source = 'Forest, Fish and Game Commission of New York, 1899'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:Annual_report_of_the_Forest,_Fish_and_Game_Commission_of_the_State_of_New_York_(1899)_(14755141182).jpg'
+      assign plate_w = 925
+      assign plate_h = 1400
+    when 'tippet-101'
+      assign plate_title = 'Optical diagrams'
+      assign plate_source = 'Alfred Ronalds, The Fly-Fisher’s Entomology, 1849'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:PlateII-Optical_Diagrams.jpg'
+      assign plate_w = 1368
+      assign plate_h = 889
+    when 'five-accessories-you-actually-need'
+      assign plate_title = 'Brook trout'
+      assign plate_source = 'Currier & Ives, 1868'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:Brook_trout_LCCN90713007.jpg'
+      assign plate_w = 1400
+      assign plate_h = 936
+    when 'why-a-nine-foot-five-weight'
+      assign plate_title = 'Brook trout fishing'
+      assign plate_source = 'Currier & Ives, 1872'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:Brook_trout_fishing_LCCN90713008.jpg'
+      assign plate_w = 1400
+      assign plate_h = 931
+    when 'the-terrestrial-window'
+      assign plate_title = 'Grasshopper, detail'
+      assign plate_source = 'W. F. Kirby, Natural History of the Animal Kingdom, 1889'
+      assign plate_url = 'https://commons.wikimedia.org/wiki/File:Natural_history_of_the_animal_kingdom_for_the_use_of_young_people_-_in_three_parts,_comprising_I._Mammalia_-_II._Birds_-_Part_III._Reptiles,_amphibia,_fishes,_insects,_worms,_molluscs,_zoophytes,_%26c._(14565661578).jpg'
+      assign plate_w = 849
+      assign plate_h = 357
+    else
+      assign plate_title = blank
+  endcase
+
+  assign loading = 'lazy'
+  if eager
+    assign loading = 'eager'
+  endif
+  assign plate_sizes = sizes | default: '(min-width: 990px) 33vw, 100vw'
+-%}
+
+{%- if image != blank or plate_title != blank -%}
+  <figure class="ht-fg-plate">
+    <div class="ht-fg-plate__frame">
+      {%- if image != blank -%}
+        {{ image | image_url: width: 1400 | image_tag: loading: loading, sizes: plate_sizes, widths: '400, 700, 1000, 1400', class: 'ht-fg-plate__img', alt: image.alt }}
+      {%- else -%}
+        {%- liquid
+          assign plate_file = 'fg-plate-' | append: key | append: '.jpg'
+          if thumb and key != 'hero'
+            assign plate_file = 'fg-thumb-' | append: key | append: '.jpg'
+            assign plate_w = 320
+            assign plate_h = 320
+            assign plate_src = plate_file | asset_url
+            assign plate_small = plate_file | asset_img_url: '160x'
+            assign plate_srcset = plate_small | append: ' 160w, ' | append: plate_src | append: ' 320w'
+          else
+            assign plate_src = plate_file | asset_img_url: '1000x'
+            assign plate_400 = plate_file | asset_img_url: '400x'
+            assign plate_700 = plate_file | asset_img_url: '700x'
+            assign plate_full = plate_file | asset_url
+            assign plate_srcset = plate_400 | append: ' 400w, ' | append: plate_700 | append: ' 700w, ' | append: plate_src | append: ' 1000w, ' | append: plate_full | append: ' 1400w'
+          endif
+        -%}
+        <img
+          class="ht-fg-plate__img"
+          src="{{ plate_src }}"
+          srcset="{{ plate_srcset }}"
+          sizes="{{ plate_sizes }}"
+          alt="{{ plate_title | escape }}"
+          loading="{{ loading }}"
+          width="{{ plate_w }}"
+          height="{{ plate_h }}"
+        >
+      {%- endif -%}
+    </div>
+    {%- if caption and plate_title != blank and image == blank -%}
+      <figcaption class="ht-fg-plate__caption">
+        {{ plate_title }}. <a href="{{ plate_url }}" rel="noopener" target="_blank">{{ plate_source }}</a>.
+      </figcaption>
+    {%- endif -%}
+  </figure>
+{%- endif -%}

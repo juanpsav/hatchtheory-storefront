@@ -1,0 +1,102 @@
+{% comment %}
+  Product hero (Hatch Theory, 2026-10-27): full-bleed photograph, large display title, and the
+  product's own buy buttons. Title and price come from the product unless overridden here.
+{% endcomment %}
+{{ 'component-price.css' | asset_url | stylesheet_tag }}
+{{ 'ht-hero.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign hero_product = section.settings.product
+  assign title = section.settings.heading
+  if title == blank and hero_product != blank
+    assign title = hero_product.title
+  endif
+  assign image = section.settings.image
+  assign image_mobile = section.settings.image_mobile | default: image
+-%}
+{%- style -%}
+  #HtHero-{{ section.id }} { --ht-hero-overlay: {{ section.settings.overlay | divided_by: 100.0 }}; }
+  {%- if section.settings.transparent_header -%}
+    {%- assign hero_text = section.settings.color_scheme.settings.text -%}
+    body:has(#HtHero-{{ section.id }}) { --ht-over-hero-text: {{ hero_text.red }}, {{ hero_text.green }}, {{ hero_text.blue }}; }
+  {%- endif -%}
+  {%- if image != blank -%}
+    #HtHero-{{ section.id }} .ht-hero__img--desktop { object-position: {{ image.presentation.focal_point }}; }
+  {%- endif -%}
+  {%- if image_mobile != blank -%}
+    {%- liquid
+      case section.settings.mobile_crop
+        when 'left'
+          assign mobile_position = '0% 50%'
+        when 'center'
+          assign mobile_position = '50% 50%'
+        when 'right'
+          assign mobile_position = '100% 50%'
+        else
+          assign mobile_position = image_mobile.presentation.focal_point
+      endcase
+    -%}
+    #HtHero-{{ section.id }} .ht-hero__img--mobile { object-position: {{ mobile_position }}; }
+  {%- endif -%}
+{%- endstyle -%}
+
+<section id="HtHero-{{ section.id }}" class="ht-hero{% if section.settings.transparent_header %} ht-hero--under-header{% endif %} color-{{ section.settings.color_scheme }} gradient" data-ht-hero>
+  {%- if image != blank -%}
+    {{ image | image_url: width: 3000 | image_tag: class: 'ht-hero__img ht-hero__img--desktop', widths: '750, 1100, 1500, 2000, 2600, 3000', sizes: '100vw', loading: 'eager', fetchpriority: 'high', alt: image.alt }}
+    {{ image_mobile | image_url: width: 1600 | image_tag: class: 'ht-hero__img ht-hero__img--mobile', widths: '500, 750, 1100, 1600', sizes: '100vw', loading: 'eager', alt: image_mobile.alt }}
+  {%- endif -%}
+  <div class="ht-hero__inner page-width">
+    {%- if title != blank -%}
+      <h1 class="ht-hero__title ht-display">{{ title | escape }}</h1>
+    {%- endif -%}
+    <div class="ht-hero__row">
+      {%- if section.settings.subheading != blank -%}
+        <div class="ht-hero__lede rte">{{ section.settings.subheading }}</div>
+      {%- endif -%}
+      {%- if hero_product != blank -%}
+        <div class="ht-hero__buy">
+          {%- if section.settings.show_price -%}
+            <div class="ht-hero__price">
+              {%- render 'price', product: hero_product, use_variant: true, show_badges: false, price_class: 'price--large' -%}
+            </div>
+          {%- endif -%}
+          {%- assign hero_form_id = 'product-form-' | append: section.id -%}
+          {% render 'buy-buttons', block: section, product: hero_product, product_form_id: hero_form_id, section_id: section.id %}
+          {%- if section.settings.show_details_link -%}
+            <a class="ht-hero__details link underlined-link" href="{{ hero_product.url }}">{{ 'products.product.view_full_details' | t }}</a>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product hero",
+  "tag": "section",
+  "class": "section ht-hero-section",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "text", "id": "heading", "label": "Title", "info": "Leave empty to use the product title." },
+    { "type": "richtext", "id": "subheading", "label": "Subtitle" },
+    { "type": "checkbox", "id": "show_price", "label": "Show price", "default": true },
+    { "type": "checkbox", "id": "show_dynamic_checkout", "label": "Show dynamic checkout buttons", "default": true },
+    { "type": "checkbox", "id": "show_details_link", "label": "Show \"View full details\" link", "default": true },
+    { "type": "checkbox", "id": "transparent_header", "label": "Transparent header over this section", "info": "Use when this is the first section on the page. The header turns solid once the page scrolls.", "default": true },
+    { "type": "header", "content": "Image" },
+    { "type": "image_picker", "id": "image", "label": "Image", "info": "Set the focal point on the image to control the crop." },
+    { "type": "image_picker", "id": "image_mobile", "label": "Mobile image", "info": "Optional. Falls back to the main image." },
+    { "type": "select", "id": "mobile_crop", "label": "Mobile crop", "default": "focal", "options": [
+      { "value": "focal", "label": "Image focal point" },
+      { "value": "left", "label": "Left" },
+      { "value": "center", "label": "Center" },
+      { "value": "right", "label": "Right" }
+    ] },
+    { "type": "range", "id": "overlay", "label": "Shade behind the text", "min": 0, "max": 100, "step": 5, "unit": "%", "default": 90 },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "info": "Text and button colours. Background shows when no image is set.", "default": "scheme-3" }
+  ],
+  "presets": [{ "name": "Product hero" }]
+}
+{% endschema %}

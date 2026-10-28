@@ -1,0 +1,172 @@
+{% comment %}
+  Blueprint flies index (Hatch Theory, 2026-10-27).
+  Every row comes from the product's Fly Box Content metaobjects (Admin > Content > Metaobjects):
+  short name, amount, size, index description, dark icon and blueprint region.
+  Surprise flies are never named or pictured: they are counted into the wildcard row only.
+{% endcomment %}
+{{ 'ht-specimen.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'ht-specimen.js' | asset_url }}" defer="defer"></script>
+
+{%- liquid
+  assign src = section.settings.product | default: product
+  assign ns = section.settings.metafield_namespace | default: 'custom'
+  assign key = section.settings.metafield_key | default: 'fly_box_content'
+  assign flies = src.metafields[ns][key].value
+  assign wildcard_count = 0
+  for fly in flies
+    if fly.is_surprise.value == true
+      assign wildcard_count = wildcard_count | plus: fly.amount.value
+    endif
+  endfor
+  assign show_wildcard = false
+  if wildcard_count > 0 and section.settings.wildcard_name != blank
+    assign show_wildcard = true
+  endif
+  assign groups = '1,2,3' | split: ','
+-%}
+{%- style -%}
+  .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px; padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px; }
+  @media screen and (min-width: 750px) { .section-{{ section.id }}-padding { padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; } }
+{%- endstyle -%}
+
+<section class="ht-spec color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="ht-spec__heading ht-display{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">{{ section.settings.heading | escape }}</h2>
+    {%- endif -%}
+    {%- if flies == blank -%}
+      {%- if request.design_mode -%}<p>Choose a product whose {{ ns }}.{{ key }} metafield lists Fly Box Content entries.</p>{%- endif -%}
+    {%- else -%}
+      <ht-specimen class="ht-spec__grid">
+        <div class="ht-spec__figure">
+          <div class="ht-spec__plate">
+            {%- if section.settings.image != blank -%}
+              {{ section.settings.image | image_url: width: 2200 | image_tag: class: 'ht-spec__img', widths: '600, 900, 1200, 1600, 2200', sizes: '(min-width: 990px) 62vw, 100vw', loading: 'lazy', alt: section.settings.image.alt }}
+            {%- endif -%}
+            <span class="ht-spec__frame" aria-hidden="true"></span>
+            {%- for fly in flies -%}
+              {%- if fly.is_surprise.value == true or fly.blueprint_region.value == blank -%}{%- continue -%}{%- endif -%}
+              {%- assign r = fly.blueprint_region.value | split: ' ' -%}
+              <button type="button" class="ht-spec__hit" data-fly="{{ fly.system.handle }}" style="--x: {{ r[0] }}%; --y: {{ r[1] }}%; --w: {{ r[2] }}%; --h: {{ r[3] }}%;" aria-label="{% render 'ht-fly-fields', fly: fly, field: 'name', name_format: section.settings.name_format %}"><span class="ht-spec__dot"></span></button>
+            {%- endfor -%}
+            {%- if show_wildcard and section.settings.wildcard_region != blank -%}
+              {%- assign r = section.settings.wildcard_region | split: ' ' -%}
+              <button type="button" class="ht-spec__hit" data-fly="wildcard" style="--x: {{ r[0] }}%; --y: {{ r[1] }}%; --w: {{ r[2] }}%; --h: {{ r[3] }}%;" aria-label="{{ section.settings.wildcard_name | escape }}"><span class="ht-spec__dot"></span></button>
+            {%- endif -%}
+          </div>
+
+          <div class="ht-spec__reader">
+            <div class="ht-spec__chips" role="group" aria-label="{{ section.settings.heading | escape }}">
+              {%- for group in groups -%}
+                {%- assign types_key = 'group_' | append: group | append: '_types' -%}
+                {%- assign types = section.settings[types_key] | downcase | split: ',' -%}
+                {%- for fly in flies -%}
+                  {%- if fly.is_surprise.value == true -%}{%- continue -%}{%- endif -%}
+                  {%- assign fly_type = fly.type.value | downcase | strip -%}
+                  {%- assign match = false -%}
+                  {%- for t in types -%}{%- assign tt = t | strip -%}{%- if tt == fly_type -%}{%- assign match = true -%}{%- endif -%}{%- endfor -%}
+                  {%- if match -%}
+                    <button type="button" class="ht-spec__chip" data-fly="{{ fly.system.handle }}" aria-pressed="false" aria-label="{% render 'ht-fly-fields', fly: fly, field: 'name', name_format: section.settings.name_format %}">
+                      {%- if fly.icon.value != blank -%}{{ fly.icon.value | image_url: width: 120 | image_tag: loading: 'lazy', widths: '80, 120', sizes: '40px', alt: '' }}{%- endif -%}
+                    </button>
+                  {%- endif -%}
+                {%- endfor -%}
+                {%- assign wg = section.settings.wildcard_group | append: '' -%}
+                {%- if show_wildcard and wg == group -%}
+                  <button type="button" class="ht-spec__chip" data-fly="wildcard" aria-pressed="false" aria-label="{{ section.settings.wildcard_name | escape }}"><span class="ht-spec__q">?</span></button>
+                {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div>
+
+        <ol class="ht-spec__key">
+          {%- for group in groups -%}
+            {%- assign label_key = 'group_' | append: group | append: '_label' -%}
+            {%- assign types_key = 'group_' | append: group | append: '_types' -%}
+            {%- assign types = section.settings[types_key] | downcase | split: ',' -%}
+            {%- capture group_rows -%}
+              {%- for fly in flies -%}
+                {%- if fly.is_surprise.value == true -%}{%- continue -%}{%- endif -%}
+                {%- assign fly_type = fly.type.value | downcase | strip -%}
+                {%- assign match = false -%}
+                {%- for t in types -%}{%- assign tt = t | strip -%}{%- if tt == fly_type -%}{%- assign match = true -%}{%- endif -%}{%- endfor -%}
+                {%- if match -%}
+                  <li class="ht-spec__item" data-fly="{{ fly.system.handle }}" data-group="{{ section.settings[label_key] | escape }}">
+                    <button type="button" class="ht-spec__row" aria-expanded="false">
+                      <span class="ht-spec__icon">{%- if fly.icon.value != blank -%}{{ fly.icon.value | image_url: width: 160 | image_tag: loading: 'lazy', widths: '96, 160', sizes: '48px', alt: '' }}{%- endif -%}</span>
+                      <span class="ht-spec__text">
+                        <span class="ht-spec__name">{% render 'ht-fly-fields', fly: fly, field: 'name', name_format: section.settings.name_format %}</span>
+                        <span class="ht-spec__detail">{% render 'ht-fly-fields', fly: fly, field: 'detail', size_format: section.settings.size_format %}</span>
+                      </span>
+                    </button>
+                    <p class="ht-spec__desc">{{ fly.summary.value | default: fly.mimic_description.value | escape }}</p>
+                  </li>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- assign wg = section.settings.wildcard_group | append: '' -%}
+              {%- if show_wildcard and wg == group -%}
+                <li class="ht-spec__item" data-fly="wildcard" data-group="{{ section.settings[label_key] | escape }}">
+                  <button type="button" class="ht-spec__row" aria-expanded="false">
+                    <span class="ht-spec__icon"><span class="ht-spec__q">?</span></span>
+                    <span class="ht-spec__text">
+                      <span class="ht-spec__name">{{ section.settings.name_format | default: '[name] (x[count])' | replace: '[name]', section.settings.wildcard_name | replace: '[count]', wildcard_count | escape }}</span>
+                      <span class="ht-spec__detail">{{ section.settings.wildcard_detail | escape }}</span>
+                    </span>
+                  </button>
+                  <p class="ht-spec__desc">{{ section.settings.wildcard_description | escape }}</p>
+                </li>
+              {%- endif -%}
+            {%- endcapture -%}
+            {%- if group_rows != blank -%}
+              <li class="ht-spec__group">{{ section.settings[label_key] | escape }}</li>
+              {{ group_rows }}
+            {%- endif -%}
+          {%- endfor -%}
+        </ol>
+      </ht-specimen>
+      {%- if section.settings.show_details_link and src != blank -%}
+        <p class="ht-spec__more"><a class="button button--secondary" href="{{ src.url }}">{{ 'products.product.view_full_details' | t }}</a></p>
+      {%- endif -%}
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Blueprint flies index",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "The Everyday Trout flies index" },
+    { "type": "product", "id": "product", "label": "Product", "info": "Flies come from this product's Fly Box Content metafield. Edit names, sizes, descriptions, icons and blueprint regions in Admin > Content > Metaobjects > Fly Box Content." },
+    { "type": "checkbox", "id": "show_details_link", "label": "Show \"View full details\" button", "default": true },
+    { "type": "image_picker", "id": "image", "label": "Blueprint drawing", "info": "Transparent PNG. Blueprint regions on each fly are percentages of this image." },
+    { "type": "header", "content": "Groups" },
+    { "type": "paragraph", "content": "Flies are grouped by their Type field. List the types for each group, separated by commas." },
+    { "type": "text", "id": "group_1_label", "label": "Group 1 label", "default": "Surface (Dries)" },
+    { "type": "text", "id": "group_1_types", "label": "Group 1 types", "default": "Dry" },
+    { "type": "text", "id": "group_2_label", "label": "Group 2 label", "default": "Sub-Surface (Nymphs)" },
+    { "type": "text", "id": "group_2_types", "label": "Group 2 types", "default": "Nymph" },
+    { "type": "text", "id": "group_3_label", "label": "Group 3 label", "default": "Streamers & Utility" },
+    { "type": "text", "id": "group_3_types", "label": "Group 3 types", "default": "Streamer" },
+    { "type": "header", "content": "Row text" },
+    { "type": "text", "id": "name_format", "label": "Name format", "default": "[name] (x[count])", "info": "[name] and [count] come from the metaobject." },
+    { "type": "text", "id": "size_format", "label": "Size format", "default": "Size [size]" },
+    { "type": "header", "content": "Wildcard row" },
+    { "type": "paragraph", "content": "Entries marked Is surprise are never shown. Their amounts are added up into this row." },
+    { "type": "text", "id": "wildcard_name", "label": "Name", "default": "WILDCARD FLIES" },
+    { "type": "text", "id": "wildcard_detail", "label": "Detail", "default": "Varied sizes" },
+    { "type": "textarea", "id": "wildcard_description", "label": "Description", "default": "The fun but useful complements to your fly box. Varied additional flies with their description and instructions." },
+    { "type": "select", "id": "wildcard_group", "label": "Group", "default": "3", "options": [{ "value": "1", "label": "Group 1" }, { "value": "2", "label": "Group 2" }, { "value": "3", "label": "Group 3" }] },
+    { "type": "text", "id": "wildcard_region", "label": "Blueprint region", "default": "74.77 12.38 16.64 33.66", "info": "Left top width height, in percent of the drawing." },
+    { "type": "header", "content": "Advanced" },
+    { "type": "text", "id": "metafield_namespace", "label": "Metafield namespace", "default": "custom" },
+    { "type": "text", "id": "metafield_key", "label": "Metafield key", "default": "fly_box_content" },
+    { "type": "color_scheme", "id": "color_scheme", "label": "Color scheme", "default": "scheme-1" },
+    { "type": "range", "id": "padding_top", "label": "Top padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 },
+    { "type": "range", "id": "padding_bottom", "label": "Bottom padding", "min": 0, "max": 160, "step": 4, "unit": "px", "default": 96 }
+  ],
+  "presets": [{ "name": "Blueprint flies index" }]
+}
+{% endschema %}
